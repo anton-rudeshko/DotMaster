@@ -1,6 +1,7 @@
 *.dotCover
 build/
 release/
+packages/
 *.suo
 *.user
 bin
