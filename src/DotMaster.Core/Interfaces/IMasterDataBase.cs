@@ -1,8 +1,6 @@
 ﻿namespace DotMaster.Core.Interfaces
 {
-    public interface IMasterDataBase<TXref, TBase>
-        where TXref : ICrossReference<TBase>
-        where TBase : IBaseObject
+    public interface IMasterDataBase
     {
         /// <summary>
         /// Найти base object для переданного xref.
@@ -10,19 +8,19 @@
         /// </summary>
         /// <param name="xref">Перекрёстная ссылка</param>
         /// <returns>BO если найден, null иначе</returns>
-        TBase BaseObjectFor(TXref xref);
+        IBaseObject BaseObjectFor(ICrossReference xref);
 
         /// <summary>
         /// Создать новый BO на основе переданного xref
         /// </summary>
         /// <param name="xref">Перекрёстная ссылка</param>
-        void CreateBaseObjectFrom(TXref xref);
+        void CreateBaseObjectFrom(ICrossReference xref);
 
         /// <summary>
         /// Добавить xref в данный BO, пересчитать доверительные правила
         /// </summary>
         /// <param name="baseObject">Базовый объект</param>
         /// <param name="xref">Перекрёстная ссылка</param>
-        void AppendXrefTo(TBase baseObject, TXref xref);
+        void AppendXrefTo(IBaseObject baseObject, ICrossReference xref);
     }
 }

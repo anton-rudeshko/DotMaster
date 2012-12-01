@@ -8,16 +8,16 @@ namespace DotMaster.Tests
     [TestFixture]
     public class KernelShould
     {
-        private Kernel<TestXref, TestBO> kernel;
-        private Mock<ISourceDataProvider<TestXref, TestBO>> provider;
-        private Mock<IMasterDataBase<TestXref, TestBO>> db;
+        private Kernel kernel;
+        private Mock<ISourceDataProvider> provider;
+        private Mock<IMasterDataBase> db;
 
         [SetUp]
         public void SetUp()
         {
-            db = new Mock<IMasterDataBase<TestXref, TestBO>>();
-            provider = new Mock<ISourceDataProvider<TestXref, TestBO>>();
-            kernel = new Kernel<TestXref, TestBO>(db.Object);
+            db = new Mock<IMasterDataBase>();
+            provider = new Mock<ISourceDataProvider>();
+            kernel = new Kernel(db.Object);
             kernel.RegisterDataProvider(provider.Object);
         }
 
@@ -70,11 +70,11 @@ namespace DotMaster.Tests
         public string SrcKey { get; set; }
     }
 
-    public class TestXref : ICrossReference<TestBO>
+    public class TestXref : ICrossReference
     {
         public string BaseObjKey { get; set; }
         public ISource Source { get; set; }
         public string SourceKey { get; set; }
-        public TestBO Object { get; set; }
+        public IBaseObject Object { get; set; }
     }
 }

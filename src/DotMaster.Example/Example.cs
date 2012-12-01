@@ -1,7 +1,4 @@
-﻿using System;
-using DotMaster.Core.Interfaces;
-using DotMaster.Core.Processing;
-using FluentNHibernate.Cfg;
+﻿using DotMaster.Core.Interfaces;
 
 namespace DotMaster.Example
 {
@@ -23,7 +20,7 @@ namespace DotMaster.Example
         public Artist Artist { get; set; }
     }
 
-    internal class Discogs : BaseSourceDataProvider<TrackXref, Track>
+    internal class Discogs : BaseSourceDataProvider
     {
         public Discogs() : base(new DiscogsSource()) // todo: источники в енум?
         {
@@ -35,23 +32,12 @@ namespace DotMaster.Example
         public string Name { get; set; }
     }
 
-    internal class TrackXref : ICrossReference<Track>
+    internal class TrackXref : ICrossReference
     {
         public string BaseObjKey { get; set; }
         public ISource Source { get; set; }
         public string SourceKey { get; set; }
 
-        public Track Object { get; set; }
-    }
-
-    public class Example
-    {
-        public static void Main(string[] args)
-        {
-            var kernel = new Kernel<TrackXref, Track>(null); // todo: master db
-            var discogs = new Discogs();
-            kernel.RegisterDataProvider(discogs);
-            discogs.Provide(new TrackXref());
-        }
+        public IBaseObject Object { get; set; }
     }
 }

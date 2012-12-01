@@ -6,23 +6,21 @@ namespace DotMaster.Core.Processing
     /// Главный класс!
     /// Хотя что он делает, ещё пока не ясно
     /// </summary>
-    public class Kernel<TXref, TBase>
-        where TXref : class, ICrossReference<TBase>
-        where TBase : IBaseObject
+    public class Kernel
     {
-        public Kernel(IMasterDataBase<TXref, TBase> masterDB)
+        public Kernel(IMasterDataBase masterDB)
         {
             MasterDB = masterDB;
         }
 
-        public IMasterDataBase<TXref, TBase> MasterDB { get; set; }
+        public IMasterDataBase MasterDB { get; set; }
 
-        public void RegisterDataProvider(ISourceDataProvider<TXref, TBase> dataProvider)
+        public void RegisterDataProvider(ISourceDataProvider dataProvider)
         {
             dataProvider.OnData += Process;
         }
 
-        private void Process(TXref xref)
+        private void Process(ICrossReference xref)
         {
             var baseObject = MasterDB.BaseObjectFor(xref);
             if (baseObject == null)
@@ -35,12 +33,12 @@ namespace DotMaster.Core.Processing
             }
         }
 
-        private void CreateBaseObjectFromXref(TXref xref)
+        private void CreateBaseObjectFromXref(ICrossReference xref)
         {
             MasterDB.CreateBaseObjectFrom(xref);
         }
 
-        private void AddXrefToBaseObject(TBase baseObject, TXref xref)
+        private void AddXrefToBaseObject(IBaseObject baseObject, ICrossReference xref)
         {
             MasterDB.AppendXrefTo(baseObject, xref);
         }
