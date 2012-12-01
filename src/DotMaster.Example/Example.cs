@@ -1,4 +1,6 @@
-﻿using DotMaster.Core.Interfaces;
+﻿using System.Collections.Generic;
+using DotMaster.Core.Interfaces;
+using FluentNHibernate.Mapping;
 
 namespace DotMaster.Example
 {
@@ -8,6 +10,7 @@ namespace DotMaster.Example
         public string SrcKey { get; set; }
 
         public string Name { get; set; }
+        public IList<Track> Tracks { get; set; }
     }
 
     public class Track : IBaseObject
@@ -16,7 +19,6 @@ namespace DotMaster.Example
         public string SrcKey { get; set; }
 
         public string Title { get; set; }
-
         public Artist Artist { get; set; }
     }
 
@@ -39,5 +41,27 @@ namespace DotMaster.Example
         public string SourceKey { get; set; }
 
         public IBaseObject Object { get; set; }
+    }
+
+    public class TrackMap : ClassMap<Track>
+    {
+        public TrackMap()
+        {
+            Id(x => x.ObjKey);
+            Map(x => x.Title);
+
+            References(track => track.Artist);
+        }
+    }
+
+    public class ArtistMap : ClassMap<Artist>
+    {
+        public ArtistMap()
+        {
+            Id(x => x.ObjKey);
+            Map(x => x.Name);
+
+            HasMany(artist => artist.Tracks);
+        }
     }
 }
