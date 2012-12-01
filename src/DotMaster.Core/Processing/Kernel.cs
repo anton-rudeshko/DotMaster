@@ -37,19 +37,16 @@ namespace DotMaster.Core.Processing
 
         private void CreateBaseObjectFromXref(TXref xref)
         {
+            MasterDB.CreateBaseObjectFrom(xref);
         }
 
         private void AddXrefToBaseObject(TBase baseObject, TXref xref)
         {
+            MasterDB.AppendXrefTo(baseObject, xref);
         }
 
         public void StartMatchAndMerge()
         {
         }
-    }
-
-    public interface IMasterDataBase<TXref, TBase> where TXref : ICrossReference<TBase> where TBase : IBaseObject
-    {
-        TBase BaseObjectFor(TXref xref);
     }
 }

@@ -40,6 +40,7 @@
     <Compile Include="Interfaces\ISource.cs" />
     <Compile Include="Interfaces\ISourceDataProvider.cs" />
     <Compile Include="Interfaces\ITrustStrategy.cs" />
+    <Compile Include="Interfaces\IMasterDataBase.cs" />
     <Compile Include="Processing\Kernel.cs" />
     <Compile Include="Processing\TrustStrategyAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

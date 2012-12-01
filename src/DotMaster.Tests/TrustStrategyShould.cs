@@ -1,38 +1,32 @@
 ﻿using System;
 using DotMaster.Core.Interfaces;
 using DotMaster.Core.Processing;
-using Moq;
 using NUnit.Framework;
 
 namespace DotMaster.Tests
 {
-    public class TrustStrategyAttributeTest
+    public class TrustStrategyShould
     {
-        [SetUp]
-        public void SetUp()
-        {
-        }
-
         [Test]
-        public void TestNull()
+        public void NotBeCreatedFromNull()
         {
             Assert.Throws<ArgumentNullException>(() => new TrustStrategyAttribute(null));
         }
 
         [Test]
-        public void TestBadType()
+        public void NotBeCreatedFromTypeNotInheritingITrustStrategy()
         {
             Assert.Throws<ArgumentException>(() => new TrustStrategyAttribute(typeof (Double)));
         }
 
         [Test]
-        public void TestInterfaceType()
+        public void NotBeCreatedFromInterface()
         {
             Assert.Throws<ArgumentException>(() => new TrustStrategyAttribute(typeof (ITrustStrategy)));
         }
 
         [Test]
-        public void TestGoodType()
+        public void BeCreatedFromImplementingClass()
         {
             var strategyAttribute = new TrustStrategyAttribute(typeof (TestTrustStrategy));
             Assert.NotNull(strategyAttribute);

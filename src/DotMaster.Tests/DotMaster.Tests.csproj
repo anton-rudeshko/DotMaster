@@ -46,8 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KernelShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TrustStrategyAttributeTest.cs" />
+    <Compile Include="TrustStrategyShould.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
