@@ -1,7 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using DotMaster.Core.Interfaces;
-using DotMaster.Core.Processing;
-using FluentNHibernate.Cfg;
+using FluentNHibernate.Mapping;
 
 namespace DotMaster.Example
 {
@@ -11,6 +10,7 @@ namespace DotMaster.Example
         public string SrcKey { get; set; }
 
         public string Name { get; set; }
+        public IList<Track> Tracks { get; set; }
     }
 
     public class Track : IBaseObject
@@ -19,11 +19,10 @@ namespace DotMaster.Example
         public string SrcKey { get; set; }
 
         public string Title { get; set; }
-
         public Artist Artist { get; set; }
     }
 
-    internal class Discogs : BaseSourceDataProvider<TrackXref, Track>
+    internal class Discogs : BaseSourceDataProvider
     {
         public Discogs() : base(new DiscogsSource()) // todo: источники в енум?
         {
@@ -35,23 +34,34 @@ namespace DotMaster.Example
         public string Name { get; set; }
     }
 
-    internal class TrackXref : ICrossReference<Track>
+    internal class TrackXref : ICrossReference
     {
         public string BaseObjKey { get; set; }
         public ISource Source { get; set; }
         public string SourceKey { get; set; }
 
-        public Track Object { get; set; }
+        public IBaseObject Object { get; set; }
     }
 
-    public class Example
+    public class TrackMap : ClassMap<Track>
     {
-        public static void Main(string[] args)
+        public TrackMap()
         {
-            var kernel = new Kernel<TrackXref, Track>(null); // todo: master db
-            var discogs = new Discogs();
-            kernel.RegisterDataProvider(discogs);
-            discogs.Provide(new TrackXref());
+            Id(x => x.ObjKey);
+            Map(x => x.Title);
+
+            References(track => track.Artist);
+        }
+    }
+
+    public class ArtistMap : ClassMap<Artist>
+    {
+        public ArtistMap()
+        {
+            Id(x => x.ObjKey);
+            Map(x => x.Name);
+
+            HasMany(artist => artist.Tracks);
         }
     }
 }

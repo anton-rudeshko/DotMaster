@@ -1,4 +1,5 @@
-﻿using DotMaster.Core.Interfaces;
+using System;
+using DotMaster.Core.Interfaces;
 
 namespace DotMaster.NHibernate
 {
@@ -6,17 +7,17 @@ namespace DotMaster.NHibernate
     {
         public IBaseObject BaseObjectFor(ICrossReference xref)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void CreateBaseObjectFrom(ICrossReference xref)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void AppendXrefTo(IBaseObject baseObject, ICrossReference xref)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

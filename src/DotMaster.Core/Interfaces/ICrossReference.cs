@@ -1,6 +1,6 @@
 ﻿namespace DotMaster.Core.Interfaces
 {
-    public interface ICrossReference<T> where T : IBaseObject
+    public interface ICrossReference
     {
         /// <summary>
         /// На какой BO смотрит этот xref
@@ -20,6 +20,6 @@
         /// <summary>
         /// Данные объекта, содержащиеся в этом xref
         /// </summary>
-        T Object { get; set; }
+        IBaseObject Object { get; set; }
     }
 }

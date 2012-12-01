@@ -2,18 +2,14 @@
 
 namespace DotMaster.Core.Interfaces
 {
-    public interface ISourceDataProvider<TXref, TBase>
-        where TXref : class, ICrossReference<TBase>
-        where TBase : IBaseObject
+    public interface ISourceDataProvider
     {
-        event Action<TXref> OnData;
+        event Action<ICrossReference> OnData;
     }
 
-    public class BaseSourceDataProvider<TXref, TBase> : ISourceDataProvider<TXref, TBase>
-        where TXref : class, ICrossReference<TBase>
-        where TBase : IBaseObject
+    public class BaseSourceDataProvider : ISourceDataProvider
     {
-        public event Action<TXref> OnData;
+        public event Action<ICrossReference> OnData;
 
         public ISource Source { get; private set; }
 
@@ -22,7 +18,7 @@ namespace DotMaster.Core.Interfaces
             Source = source;
         }
 
-        public void Provide(TXref xref)
+        public void Provide(ICrossReference xref)
         {
             if (xref == null)
             {
