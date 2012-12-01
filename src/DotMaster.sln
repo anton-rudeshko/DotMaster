@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotMaster.NHibernate", "Dot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotMaster.Tests", "DotMaster.Tests\DotMaster.Tests.csproj", "{CF88A56F-1527-48CD-B754-7C3486A18947}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotMaster.Example", "DotMaster.Example\DotMaster.Example.csproj", "{85E713AE-3FB0-460F-9114-02BC72FFD16B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{CF88A56F-1527-48CD-B754-7C3486A18947}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF88A56F-1527-48CD-B754-7C3486A18947}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF88A56F-1527-48CD-B754-7C3486A18947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85E713AE-3FB0-460F-9114-02BC72FFD16B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85E713AE-3FB0-460F-9114-02BC72FFD16B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85E713AE-3FB0-460F-9114-02BC72FFD16B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85E713AE-3FB0-460F-9114-02BC72FFD16B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
