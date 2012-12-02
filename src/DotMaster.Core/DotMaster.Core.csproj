@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Interfaces\IBaseObject.cs" />
     <Compile Include="Interfaces\ICrossReference.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\ISource.cs" />
     <Compile Include="Interfaces\ISourceDataProvider.cs" />
     <Compile Include="Interfaces\ITrustStrategy.cs" />

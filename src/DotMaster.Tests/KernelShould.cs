@@ -9,16 +9,16 @@ namespace DotMaster.Tests
     public class KernelShould
     {
         private Kernel kernel;
-        private Mock<ISourceDataProvider> provider;
+        private Mock<ISourceDataProvider<TestXref>> provider;
         private Mock<IMasterDataBase> db;
 
         [SetUp]
         public void SetUp()
         {
             db = new Mock<IMasterDataBase>();
-            provider = new Mock<ISourceDataProvider>();
+            provider = new Mock<ISourceDataProvider<TestXref>>();
             kernel = new Kernel(db.Object);
-            kernel.RegisterDataProvider(provider.Object);
+            kernel.RegisterDataProvider<TestBO, TestXref>(provider.Object);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace DotMaster.Tests
             provider.Raise(a => a.OnData += null, testXref);
 
             // Verify
-            db.Verify(@base => @base.BaseObjectFor(testXref));
+            db.Verify(@base => @base.BaseObjectFor<TestBO, TestXref>(testXref));
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace DotMaster.Tests
         {
             // Arrange
             var testXref = new TestXref();
-            db.Setup(a => a.BaseObjectFor(testXref)).Returns((TestBO) null);
+            db.Setup(a => a.BaseObjectFor<TestBO, TestXref>(testXref)).Returns((TestBO) null);
 
             // Act
             provider.Raise(a => a.OnData += null, testXref);
@@ -54,7 +54,7 @@ namespace DotMaster.Tests
             // Arrange
             var testXref = new TestXref();
             var testBo = new TestBO();
-            db.Setup(a => a.BaseObjectFor(testXref)).Returns(testBo);
+            db.Setup(a => a.BaseObjectFor<TestBO, TestXref>(testXref)).Returns(testBo);
 
             // Act
             provider.Raise(a => a.OnData += null, testXref);
@@ -62,19 +62,5 @@ namespace DotMaster.Tests
             // Assert
             db.Verify(@base => @base.AppendXrefTo(testBo, testXref));
         }
-    }
-
-    public class TestBO : IBaseObject
-    {
-        public string ObjKey { get; set; }
-        public string SrcKey { get; set; }
-    }
-
-    public class TestXref : ICrossReference
-    {
-        public string BaseObjKey { get; set; }
-        public ISource Source { get; set; }
-        public string SourceKey { get; set; }
-        public IBaseObject Object { get; set; }
     }
 }

@@ -1,10 +1,9 @@
-﻿namespace DotMaster.Core.Interfaces
+﻿using System.Collections.Generic;
+
+namespace DotMaster.Core.Interfaces
 {
-    public interface IBaseObject
+    public interface IBaseObject : IEntity
     {
-        /// <summary>
-        /// Новый первичный ключ в системе
-        /// </summary>
-        string ObjKey { get; set; }
+        IList<ICrossReference> Xrefs { get; set; }
     }
 }

@@ -57,7 +57,10 @@
   <ItemGroup>
     <Compile Include="GenerateSchema.cs" />
     <Compile Include="KernelShould.cs" />
+    <Compile Include="NHibernateSmokeTests.cs" />
+    <Compile Include="NHibernateTestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestDataModel.cs" />
     <Compile Include="TrustStrategyShould.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +74,10 @@
     <ProjectReference Include="..\DotMaster.Example\DotMaster.Example.csproj">
       <Project>{85E713AE-3FB0-460F-9114-02BC72FFD16B}</Project>
       <Name>DotMaster.Example</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotMaster.NHibernate\DotMaster.NHibernate.csproj">
+      <Project>{17453B96-A228-41AB-AE99-B7E6339BFC3F}</Project>
+      <Name>DotMaster.NHibernate</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

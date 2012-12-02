@@ -1,6 +1,6 @@
 ﻿namespace DotMaster.Core.Interfaces
 {
-    public interface ICrossReference
+    public interface ICrossReference : IEntity
     {
         /// <summary>
         /// На какой BO смотрит этот xref

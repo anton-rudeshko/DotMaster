@@ -8,19 +8,24 @@
         /// </summary>
         /// <param name="xref">Перекрёстная ссылка</param>
         /// <returns>BO если найден, null иначе</returns>
-        IBaseObject BaseObjectFor(ICrossReference xref);
+        TBase BaseObjectFor<TBase, TXref>(TXref xref)
+            where TXref : class, ICrossReference
+            where TBase : class, IBaseObject;
 
         /// <summary>
         /// Создать новый BO на основе переданного xref
         /// </summary>
         /// <param name="xref">Перекрёстная ссылка</param>
-        void CreateBaseObjectFrom(ICrossReference xref);
+        void CreateBaseObjectFrom<TXref>(TXref xref)
+            where TXref : class, ICrossReference;
 
         /// <summary>
         /// Добавить xref в данный BO, пересчитать доверительные правила
         /// </summary>
         /// <param name="baseObject">Базовый объект</param>
         /// <param name="xref">Перекрёстная ссылка</param>
-        void AppendXrefTo(IBaseObject baseObject, ICrossReference xref);
+        void AppendXrefTo<TBase, TXref>(TBase baseObject, TXref xref)
+            where TXref : class, ICrossReference
+            where TBase : class, IBaseObject;
     }
 }

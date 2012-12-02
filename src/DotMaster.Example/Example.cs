@@ -6,23 +6,25 @@ namespace DotMaster.Example
 {
     public class Artist : IBaseObject
     {
-        public string ObjKey { get; set; }
-        public string SrcKey { get; set; }
+        public virtual string ObjKey { get; set; }
+        public virtual string SrcKey { get; set; }
 
-        public string Name { get; set; }
-        public IList<Track> Tracks { get; set; }
+        public virtual string Name { get; set; }
+        public virtual IList<Track> Tracks { get; set; }
+        public IList<ICrossReference> Xrefs { get; set; }
     }
 
     public class Track : IBaseObject
     {
-        public string ObjKey { get; set; }
-        public string SrcKey { get; set; }
+        public virtual string ObjKey { get; set; }
+        public virtual string SrcKey { get; set; }
 
-        public string Title { get; set; }
-        public Artist Artist { get; set; }
+        public virtual string Title { get; set; }
+        public virtual Artist Artist { get; set; }
+        public IList<ICrossReference> Xrefs { get; set; }
     }
 
-    internal class Discogs : BaseSourceDataProvider
+    internal class Discogs : BaseSourceDataProvider<TrackXref>
     {
         public Discogs() : base(new DiscogsSource()) // todo: источники в енум?
         {
@@ -34,13 +36,14 @@ namespace DotMaster.Example
         public string Name { get; set; }
     }
 
-    internal class TrackXref : ICrossReference
+    public class TrackXref : ICrossReference
     {
-        public string BaseObjKey { get; set; }
-        public ISource Source { get; set; }
-        public string SourceKey { get; set; }
+        public virtual string BaseObjKey { get; set; }
+        public virtual ISource Source { get; set; }
+        public virtual string SourceKey { get; set; }
 
-        public IBaseObject Object { get; set; }
+        public virtual IBaseObject Object { get; set; }
+        public string ObjKey { get; set; }
     }
 
     public class TrackMap : ClassMap<Track>
