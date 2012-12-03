@@ -38,5 +38,9 @@ namespace DotMaster.Core.Interfaces
         IEnumerable<TXref> QueryForXrefs<TBase, TXref>(string sourceKey, string source)
             where TBase : class, IBaseObject<TBase, TXref>
             where TXref : class, ICrossReference<TBase, TXref>;
+
+//        TBase QueryForBaseObject<TBase, TXref>(string sourceKey, string source)
+//            where TBase : class, IBaseObject<TBase, TXref>
+//            where TXref : class, ICrossReference<TBase, TXref>;
     }
 }

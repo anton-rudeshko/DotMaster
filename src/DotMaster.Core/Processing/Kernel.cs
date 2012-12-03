@@ -22,16 +22,24 @@ namespace DotMaster.Core.Processing
             where TXref : class, ICrossReference<TBase, TXref>
             where TBase : class, IBaseObject<TBase, TXref>
         {
-            var presentXref = MasterDB.QueryForXref<TBase, TXref>(xref.SourceKey, xref.Source);
-            if (presentXref == null)
-            {
-                CreateBaseObjectFromXref<TBase, TXref>(xref);
-            }
-            else
+            TXref presentXref;
+            if (TryGetXref<TBase, TXref>(xref, out presentXref))
             {
                 UpdateXref<TBase, TXref>(presentXref, xref);
                 Save<TBase, TXref>(presentXref);
             }
+            else
+            {
+                CreateBaseObjectFromXref<TBase, TXref>(xref);
+            }
+        }
+
+        private bool TryGetXref<TBase, TXref>(TXref xref, out TXref presentXref)
+            where TBase : class, IBaseObject<TBase, TXref>
+            where TXref : class, ICrossReference<TBase, TXref>
+        {
+            presentXref = MasterDB.QueryForXref<TBase, TXref>(xref.SourceKey, xref.Source);
+            return presentXref == null;
         }
 
         private void Save<TBase, TXref>(TXref xref)

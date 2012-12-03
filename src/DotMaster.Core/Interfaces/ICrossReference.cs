@@ -1,4 +1,6 @@
-﻿namespace DotMaster.Core.Interfaces
+﻿using System;
+
+namespace DotMaster.Core.Interfaces
 {
     public interface ICrossReference<TBase, TXref> : IEntity
         where TXref : class, ICrossReference<TBase, TXref>
@@ -28,5 +30,10 @@
         /// Ссылка на базовую сущность, в которой содержится данный xref
         /// </summary>
         TBase BaseObject { get; set; }
+
+        /// <summary>
+        /// Дата и время пришедшего обновления
+        /// </summary>
+        DateTime UpdateDate { get; set; }
     }
 }

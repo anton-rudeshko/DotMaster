@@ -23,8 +23,8 @@ namespace DotMaster.Tests
 
         public virtual TestBO Object { get; set; }
 
-        public virtual int MySecondProperty { get; set; }
         public virtual TestBO BaseObject { get; set; }
+        public DateTime UpdateDate { get; set; }
     }
 
     public class TestProvider : ISourceDataProvider<TestBO, TestXref>
@@ -48,7 +48,6 @@ namespace DotMaster.Tests
         {
             Id(x => x.ObjKey);
             Map(x => x.SourceKey);
-            Map(x => x.MySecondProperty);
             References(x => x.BaseObject);
         }
     }
