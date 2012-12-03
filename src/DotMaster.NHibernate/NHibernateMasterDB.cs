@@ -46,14 +46,14 @@ namespace DotMaster.NHibernate
             where TBase : class, IBaseObject<TBase, TXref>
             where TXref : class, ICrossReference<TBase, TXref>
         {
-            return CurrentSession.Query<TXref>().FirstOrDefault(x => x.SourceKey == sourceKey);
+            return CurrentSession.Query<TXref>().FirstOrDefault(x => x.SourceKey == sourceKey && x.Source == source);
         }
 
         public IEnumerable<TXref> QueryForXrefs<TBase, TXref>(string sourceKey, string source)
             where TBase : class, IBaseObject<TBase, TXref>
             where TXref : class, ICrossReference<TBase, TXref>
         {
-            return CurrentSession.Query<TXref>().Where(x => x.SourceKey == sourceKey);
+            return CurrentSession.Query<TXref>().Where(x => x.SourceKey == sourceKey && x.Source == source);
         }
     }
 }

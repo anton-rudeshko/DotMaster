@@ -1,5 +1,4 @@
-﻿using System;
-using DotMaster.Core.Interfaces;
+﻿using DotMaster.Core.Interfaces;
 using DotMaster.Core.Processing;
 using Moq;
 using NUnit.Framework;
@@ -9,10 +8,6 @@ namespace DotMaster.Tests
     [TestFixture]
     public class KernelShould
     {
-        public class TestProvider : ISourceDataProvider<TestBO, TestXref>
-        {
-            public event Action<TestXref> OnData;
-        }
 
         private Kernel kernel;
         private Mock<TestProvider> provider;
@@ -21,9 +16,9 @@ namespace DotMaster.Tests
         [SetUp]
         public void SetUp()
         {
-            kernel = new Kernel(db.Object);
             db = new Mock<IMasterDataBase>();
             provider = new Mock<TestProvider>();
+            kernel = new Kernel(db.Object);
             kernel.RegisterDataProvider(provider.Object);
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DotMaster.Core.Interfaces;
 using FluentNHibernate.Mapping;
 
@@ -24,6 +25,11 @@ namespace DotMaster.Tests
 
         public virtual int MySecondProperty { get; set; }
         public virtual TestBO BaseObject { get; set; }
+    }
+
+    public class TestProvider : ISourceDataProvider<TestBO, TestXref>
+    {
+        public event Action<TestXref> OnData;
     }
 
     public class TestBOMap : ClassMap<TestBO>
