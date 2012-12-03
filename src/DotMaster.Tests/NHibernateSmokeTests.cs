@@ -34,20 +34,5 @@ namespace DotMaster.Tests
         {
             Assert.Throws<ArgumentException>(() => db.BaseObjectFor<TestBO, TestXref>(new TestXref()));
         }
-
-        [Test]
-        public void FindBaseObject()
-        {
-            // Arrange
-            var testXref = new TestXref {SourceKey = "fba", ObjKey = "abf"};
-            db.CreateBaseObjectFrom(testXref);
-
-            // Act
-            var bo = db.BaseObjectFor<TestBO, TestXref>(testXref);
-
-            // Assert
-            Assert.That(bo, Is.Not.Null);
-            Assert.That(testXref.SourceKey, Is.EqualTo(bo.ObjKey));
-        }
     }
 }

@@ -11,40 +11,60 @@ namespace DotMaster.Core.Processing
 
         public IMasterDataBase MasterDB { get; set; }
 
-        public void RegisterDataProvider<TBase, TXref>(ISourceDataProvider<TXref> dataProvider) 
-            where TXref : class, ICrossReference 
-            where TBase : class, IBaseObject
+        public void RegisterDataProvider<TBase, TXref>(ISourceDataProvider<TBase, TXref> dataProvider)
+            where TXref : class, ICrossReference<TBase, TXref>
+            where TBase : class, IBaseObject<TBase, TXref>
         {
             dataProvider.OnData += Process<TBase, TXref>;
         }
 
-        private void Process<TBase, TXref>(TXref xref) 
-            where TXref : class, ICrossReference 
-            where TBase : class, IBaseObject
+        private void Process<TBase, TXref>(TXref xref)
+            where TXref : class, ICrossReference<TBase, TXref>
+            where TBase : class, IBaseObject<TBase, TXref>
         {
-            var baseObject = MasterDB.BaseObjectFor<TBase, TXref>(xref);
-            if (baseObject == null)
+            var presentXref = MasterDB.QueryForXref<TBase, TXref>(xref.SourceKey, xref.Source);
+            if (presentXref == null)
             {
-//                CreateBaseObjectFromXref(xref);
+                CreateBaseObjectFromXref<TBase, TXref>(xref);
             }
             else
             {
-//                AddXrefToBaseObject(baseObject, xref);
+                UpdateXref<TBase, TXref>(presentXref, xref);
+                Save<TBase, TXref>(presentXref);
             }
         }
 
-        private void CreateBaseObjectFromXref(ICrossReference xref)
+        private void Save<TBase, TXref>(TXref xref)
+            where TXref : class, ICrossReference<TBase, TXref>
+            where TBase : class, IBaseObject<TBase, TXref>
         {
-//            MasterDB.CreateBaseObjectFrom(xref);
+            throw new System.NotImplementedException();
         }
 
-        private void AddXrefToBaseObject(IBaseObject baseObject, ICrossReference xref)
+        private void UpdateXref<TBase, TXref>(TXref presentXref, TXref xref)
+            where TXref : class, ICrossReference<TBase, TXref>
+            where TBase : class, IBaseObject<TBase, TXref>
         {
-//            MasterDB.AppendXrefTo(baseObject, xref);
+            throw new System.NotImplementedException();
+        }
+
+        private void CreateBaseObjectFromXref<TBase, TXref>(TXref xref)
+            where TXref : class, ICrossReference<TBase, TXref>
+            where TBase : class, IBaseObject<TBase, TXref>
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void AddXrefToBaseObject<TBase, TXref>(TBase baseObject, TXref xref)
+            where TXref : class, ICrossReference<TBase, TXref>
+            where TBase : class, IBaseObject<TBase, TXref>
+        {
+            throw new System.NotImplementedException();
         }
 
         public void StartMatchAndMerge()
         {
+            throw new System.NotImplementedException();
         }
     }
 }

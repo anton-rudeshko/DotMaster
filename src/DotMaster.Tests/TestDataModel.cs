@@ -4,26 +4,26 @@ using FluentNHibernate.Mapping;
 
 namespace DotMaster.Tests
 {
-    public class TestBO : IBaseObject
+    public class TestBO : IBaseObject<TestBO, TestXref>
     {
         public virtual string ObjKey { get; set; }
-        public virtual IList<ICrossReference> Xrefs { get; set; }
+        public virtual IList<TestXref> Xrefs { get; set; }
 
         public virtual string MyProperty { get; set; }
     }
 
-    public class TestXref : ICrossReference
+    public class TestXref : ICrossReference<TestBO, TestXref>
     {
         public virtual string ObjKey { get; set; }
         public virtual string BaseObjKey { get; set; }
 
-        public virtual ISource Source { get; set; }
+        public virtual string Source { get; set; }
         public virtual string SourceKey { get; set; }
 
-        public virtual IBaseObject Object { get; set; }
+        public virtual TestBO Object { get; set; }
 
         public virtual int MySecondProperty { get; set; }
-        public virtual IBaseObject BaseObject { get; set; }
+        public virtual TestBO BaseObject { get; set; }
     }
 
     public class TestBOMap : ClassMap<TestBO>
@@ -32,7 +32,7 @@ namespace DotMaster.Tests
         {
             Id(x => x.ObjKey);
             Map(x => x.MyProperty);
-            HasMany<TestXref>(x => x.Xrefs);
+            HasMany(x => x.Xrefs);
         }
     }
 
@@ -43,7 +43,7 @@ namespace DotMaster.Tests
             Id(x => x.ObjKey);
             Map(x => x.SourceKey);
             Map(x => x.MySecondProperty);
-            References<TestBO>(x => x.BaseObject);
+            References(x => x.BaseObject);
         }
     }
 }

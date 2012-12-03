@@ -1,4 +1,6 @@
-﻿namespace DotMaster.Core.Interfaces
+﻿using System.Collections.Generic;
+
+namespace DotMaster.Core.Interfaces
 {
     public interface IMasterDataBase
     {
@@ -9,15 +11,16 @@
         /// <param name="xref">Перекрёстная ссылка</param>
         /// <returns>BO если найден, null иначе</returns>
         TBase BaseObjectFor<TBase, TXref>(TXref xref)
-            where TXref : class, ICrossReference
-            where TBase : class, IBaseObject;
+            where TBase : class, IBaseObject<TBase, TXref>
+            where TXref : class, ICrossReference<TBase, TXref>;
 
         /// <summary>
         /// Создать новый BO на основе переданного xref
         /// </summary>
         /// <param name="xref">Перекрёстная ссылка</param>
-        void CreateBaseObjectFrom<TXref>(TXref xref)
-            where TXref : class, ICrossReference;
+        void CreateBaseObjectFrom<TBase, TXref>(TXref xref)
+            where TBase : class, IBaseObject<TBase, TXref>
+            where TXref : class, ICrossReference<TBase, TXref>;
 
         /// <summary>
         /// Добавить xref в данный BO, пересчитать доверительные правила
@@ -25,7 +28,15 @@
         /// <param name="baseObject">Базовый объект</param>
         /// <param name="xref">Перекрёстная ссылка</param>
         void AppendXrefTo<TBase, TXref>(TBase baseObject, TXref xref)
-            where TXref : class, ICrossReference
-            where TBase : class, IBaseObject;
+            where TBase : class, IBaseObject<TBase, TXref>
+            where TXref : class, ICrossReference<TBase, TXref>;
+
+        TXref QueryForXref<TBase, TXref>(string sourceKey, string source)
+            where TBase : class, IBaseObject<TBase, TXref>
+            where TXref : class, ICrossReference<TBase, TXref>;
+
+        IEnumerable<TXref> QueryForXrefs<TBase, TXref>(string sourceKey, string source)
+            where TBase : class, IBaseObject<TBase, TXref>
+            where TXref : class, ICrossReference<TBase, TXref>;
     }
 }

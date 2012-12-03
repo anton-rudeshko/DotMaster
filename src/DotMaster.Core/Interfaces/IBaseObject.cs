@@ -2,8 +2,10 @@
 
 namespace DotMaster.Core.Interfaces
 {
-    public interface IBaseObject : IEntity
+    public interface IBaseObject<TBase, TXref> : IEntity
+        where TBase : class, IBaseObject<TBase, TXref>
+        where TXref : class, ICrossReference<TBase, TXref>
     {
-        IList<ICrossReference> Xrefs { get; set; }
+        IList<TXref> Xrefs { get; set; }
     }
 }

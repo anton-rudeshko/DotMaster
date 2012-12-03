@@ -1,6 +1,8 @@
 ﻿namespace DotMaster.Core.Interfaces
 {
-    public interface ICrossReference : IEntity
+    public interface ICrossReference<TBase, TXref> : IEntity
+        where TXref : class, ICrossReference<TBase, TXref>
+        where TBase : class, IBaseObject<TBase, TXref>
     {
         /// <summary>
         /// На какой BO смотрит этот xref
@@ -10,7 +12,7 @@
         /// <summary>
         /// Идентификатор источника
         /// </summary>
-        ISource Source { get; set; }
+        string Source { get; set; }
 
         /// <summary>
         /// Первичный ключ из источника
@@ -20,6 +22,11 @@
         /// <summary>
         /// Данные объекта, содержащиеся в этом xref
         /// </summary>
-        IBaseObject Object { get; set; }
+        TBase Object { get; set; }
+
+        /// <summary>
+        /// Ссылка на базовую сущность, в которой содержится данный xref
+        /// </summary>
+        TBase BaseObject { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using DotMaster.Example;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace DotMaster.Tests
 {
@@ -9,7 +8,7 @@ namespace DotMaster.Tests
         [Test]
         public void GenerateMusicSchema()
         {
-            NHibernateTestHelper.PrintSchema(NHibernateTestHelper.CreateTestConfiguration<Track>());
+//            NHibernateTestHelper.PrintSchema(NHibernateTestHelper.CreateTestConfiguration<Track>());
         }
     }
 }
