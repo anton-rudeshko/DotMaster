@@ -16,72 +16,72 @@ namespace DotMaster.Core.Processing
 
         public IMasterDataBase MasterDB { get; set; }
 
-        public void RegisterDataProvider<TBase, TXref>(ISourceDataProvider<TBase, TXref> dataProvider)
-            where TBase : class, IBaseObject<TBase, TXref>
-            where TXref : class, ICrossReference<TBase, TXref>
+        public void RegisterDataProvider<TKey, TBase, TXref>(ISourceDataProvider<TKey, TBase, TXref> dataProvider)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
             if (dataProvider == null)
             {
                 throw new ArgumentNullException("dataProvider");
             }
-            dataProvider.OnData += Process<TBase, TXref>;
+            dataProvider.OnData += Process<TKey, TBase, TXref>;
         }
 
-        private void Process<TBase, TXref>(TXref xref)
-            where TBase : class, IBaseObject<TBase, TXref>
-            where TXref : class, ICrossReference<TBase, TXref>
+        private void Process<TKey, TBase, TXref>(TXref xref)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
-            // todo: fix date
-            if (xref.UpdateDate == null)
+            // Ignore null xrefs
+            if (xref == null)
             {
-                xref.UpdateDate = new DateTime();
+                return;
             }
-
             TXref presentXref;
-            var baseObject = TryGetXref<TBase, TXref>(xref, out presentXref) ? presentXref.BaseObject : null;
-            UpdateBaseObject(baseObject, xref);
+            var baseObject = TryGetXref<TKey, TBase, TXref>(xref, out presentXref) ? presentXref.BaseObject : null /*new TBase()*/;
+            UpdateBaseObjectFromXref<TKey, TBase, TXref>(baseObject, xref);
         }
 
-        private void UpdateBaseObject<TBase, TXref>(TBase baseObject, TXref xref)
-            where TBase : class, IBaseObject<TBase, TXref>
-            where TXref : class, ICrossReference<TBase, TXref>
+        private void UpdateBaseObjectFromXref<TKey, TBase, TXref>(TBase baseObject, TXref xref)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
-            baseObject.LastUpdate = xref.UpdateDate;
+            // calculate trust rules
+            // todo: how to handle BO deletion?
+            // copy fields from xref.ObjectData to baseObject
+        }
+
+        private TBase LoadBaseObjectFor<TKey, TBase, TXref>(TXref xref)
+        {
             throw new NotImplementedException();
         }
 
-        private TBase LoadBaseObjectFor<TBase, TXref>(TXref xref)
+        private bool TryGetXref<TKey, TBase, TXref>(TXref xref, out TXref presentXref)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
-            throw new NotImplementedException();
-        }
-
-        private bool TryGetXref<TBase, TXref>(TXref xref, out TXref presentXref)
-            where TBase : class, IBaseObject<TBase, TXref>
-            where TXref : class, ICrossReference<TBase, TXref>
-        {
-            presentXref = MasterDB.QueryForXref<TBase, TXref>(xref.SourceKey, xref.Source);
+            presentXref = MasterDB.QueryForXref<TKey, TBase, TXref>(xref.SourceKey, xref.Source);
             return presentXref == null;
         }
 
-        private TBase CreateNewBase<TBase, TXref>(TXref xref)
-            where TBase : class, IBaseObject<TBase, TXref>
-            where TXref : class, ICrossReference<TBase, TXref>
+        private TBase CreateNewBase<TKey, TBase, TXref>(TXref xref)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
             TBase newBaseObject = null;
             // todo: copy fields from xref to BO
             return newBaseObject;
         }
 
-        private void Save<TBase, TXref>(TXref xref)
-            where TXref : class, ICrossReference<TBase, TXref>
-            where TBase : class, IBaseObject<TBase, TXref>
+        private void Save<TKey, TBase, TXref>(TXref xref)
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
         {
             throw new System.NotImplementedException();
         }
 
-        private void UpdateXref<TBase, TXref>(TXref presentXref, TXref xref)
-            where TXref : class, ICrossReference<TBase, TXref>
-            where TBase : class, IBaseObject<TBase, TXref>
+        private void UpdateXref<TKey, TBase, TXref>(TXref presentXref, TXref xref)
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
         {
             throw new System.NotImplementedException();
         }

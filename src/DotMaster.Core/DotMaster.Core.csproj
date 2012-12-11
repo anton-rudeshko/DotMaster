@@ -39,6 +39,12 @@
     <Compile Include="Interfaces\IBaseObject.cs" />
     <Compile Include="Interfaces\ICrossReference.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
+    <Compile Include="Interfaces\Impl\LongBaseObject.cs" />
+    <Compile Include="Interfaces\Impl\LongCrossReference.cs" />
+    <Compile Include="Interfaces\Impl\LongSourceDataProvider.cs" />
+    <Compile Include="Interfaces\Impl\StringBaseObject.cs" />
+    <Compile Include="Interfaces\Impl\StringCrossReference.cs" />
+    <Compile Include="Interfaces\Impl\StringSourceDataProvider.cs" />
     <Compile Include="Interfaces\ISourceDataProvider.cs" />
     <Compile Include="Interfaces\ITrustStrategy.cs" />
     <Compile Include="Interfaces\IMasterDataBase.cs" />

@@ -21,37 +21,37 @@ namespace DotMaster.NHibernate
             _sessionFactory = sessionFactory;
         }
 
-        public TBase BaseObjectFor<TBase, TXref>(TXref xref)
-            where TBase : class, IBaseObject<TBase, TXref>
-            where TXref : class, ICrossReference<TBase, TXref>
+        public TBase BaseObjectFor<TKey, TBase, TXref>(TXref xref)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
             throw new NotImplementedException();
         }
 
-        public void CreateBaseObjectFrom<TBase, TXref>(TXref xref)
-            where TBase : class, IBaseObject<TBase, TXref>
-            where TXref : class, ICrossReference<TBase, TXref>
+        public void CreateBaseObjectFrom<TKey, TBase, TXref>(TXref xref)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
             throw new NotImplementedException();
         }
 
-        public void AppendXrefTo<TBase, TXref>(TBase baseObject, TXref xref)
-            where TBase : class, IBaseObject<TBase, TXref>
-            where TXref : class, ICrossReference<TBase, TXref>
+        public void AppendXrefTo<TKey, TBase, TXref>(TBase baseObject, TXref xref)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
             throw new NotImplementedException();
         }
 
-        public TXref QueryForXref<TBase, TXref>(string sourceKey, string source)
-            where TBase : class, IBaseObject<TBase, TXref>
-            where TXref : class, ICrossReference<TBase, TXref>
+        public TXref QueryForXref<TKey, TBase, TXref>(string sourceKey, string source)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
             return CurrentSession.Query<TXref>().FirstOrDefault(x => x.SourceKey == sourceKey && x.Source == source);
         }
 
-        public IEnumerable<TXref> QueryForXrefs<TBase, TXref>(string sourceKey, string source)
-            where TBase : class, IBaseObject<TBase, TXref>
-            where TXref : class, ICrossReference<TBase, TXref>
+        public IEnumerable<TXref> QueryForXrefs<TKey, TBase, TXref>(string sourceKey, string source)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
             return CurrentSession.Query<TXref>().Where(x => x.SourceKey == sourceKey && x.Source == source);
         }

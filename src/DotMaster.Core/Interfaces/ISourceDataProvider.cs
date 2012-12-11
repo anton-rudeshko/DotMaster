@@ -2,9 +2,9 @@
 
 namespace DotMaster.Core.Interfaces
 {
-    public interface ISourceDataProvider<TBase, out TXref>
-        where TXref : class, ICrossReference<TBase, TXref>
-        where TBase : class, IBaseObject<TBase, TXref>
+    public interface ISourceDataProvider<TKey, TBase, out TXref>
+        where TXref : class, ICrossReference<TKey, TBase, TXref>
+        where TBase : class, IBaseObject<TKey, TBase, TXref>
     {
         event Action<TXref> OnData;
     }

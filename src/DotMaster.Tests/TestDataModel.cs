@@ -1,36 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using DotMaster.Core.Interfaces;
+﻿using DotMaster.Core.Interfaces.Impl;
 using FluentNHibernate.Mapping;
 
 namespace DotMaster.Tests
 {
-    public class TestBO : IBaseObject<TestBO, TestXref>
+    public class TestBO : LongBaseObject<TestBO, TestXref>
     {
-        public virtual string ObjKey { get; set; }
-        public virtual IList<TestXref> Xrefs { get; set; }
-        public virtual DateTime LastUpdate { get; set; }
-
         public virtual string MyProperty { get; set; }
     }
 
-    public class TestXref : ICrossReference<TestBO, TestXref>
+    public class TestXref : LongCrossReference<TestBO, TestXref>
     {
-        public virtual string ObjKey { get; set; }
-        public virtual string BaseObjKey { get; set; }
 
-        public virtual string Source { get; set; }
-        public virtual string SourceKey { get; set; }
-
-        public virtual TestBO Object { get; set; }
-
-        public virtual TestBO BaseObject { get; set; }
-        public virtual DateTime UpdateDate { get; set; }
     }
 
-    public class TestProvider : ISourceDataProvider<TestBO, TestXref>
+    public class TestProvider : LongSourceDataProvider<TestBO, TestXref>
     {
-        public event Action<TestXref> OnData;
+
     }
 
     public class TestBOMap : ClassMap<TestBO>
