@@ -17,12 +17,12 @@ namespace DotMaster.Tests
     public class TestXref : ICrossReference<long, TestBO, TestXref>
     {
         public virtual long ObjKey { get; set; }
-        public virtual string BaseObjKey { get; set; }
+        public virtual long BaseObjKey { get; set; }
 
         public virtual string Source { get; set; }
         public virtual string SourceKey { get; set; }
 
-        public virtual TestBO Object { get; set; }
+        public virtual TestBO ObjectData { get; set; }
 
         public virtual TestBO BaseObject { get; set; }
         public virtual DateTime UpdateDate { get; set; }
@@ -30,7 +30,7 @@ namespace DotMaster.Tests
 
     public class TestProvider : ISourceDataProvider<long, TestBO, TestXref>
     {
-        public event Action<TestXref> OnData;
+        public virtual event Action<TestXref> OnData;
     }
 
     public class TestBOMap : ClassMap<TestBO>

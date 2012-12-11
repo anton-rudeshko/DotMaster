@@ -31,23 +31,23 @@ namespace DotMaster.Core.Processing
             where TBase : class, IBaseObject<TKey, TBase, TXref>
             where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
-            // todo: fix date
-            if (xref.UpdateDate == null)
+            // Ignore null xrefs
+            if (xref == null)
             {
-                xref.UpdateDate = new DateTime();
+                return;
             }
-
             TXref presentXref;
-            var baseObject = TryGetXref<TKey, TBase, TXref>(xref, out presentXref) ? presentXref.BaseObject : null;
-            UpdateBaseObject<TKey, TBase, TXref>(baseObject, xref);
+            var baseObject = TryGetXref<TKey, TBase, TXref>(xref, out presentXref) ? presentXref.BaseObject : null /*new TBase()*/;
+            UpdateBaseObjectFromXref<TKey, TBase, TXref>(baseObject, xref);
         }
 
-        private void UpdateBaseObject<TKey, TBase, TXref>(TBase baseObject, TXref xref)
+        private void UpdateBaseObjectFromXref<TKey, TBase, TXref>(TBase baseObject, TXref xref)
             where TBase : class, IBaseObject<TKey, TBase, TXref>
             where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
-            baseObject.LastUpdate = xref.UpdateDate;
-            throw new NotImplementedException();
+            // calculate trust rules
+            // todo: how to handle BO deletion?
+            // copy fields from xref.ObjectData to baseObject
         }
 
         private TBase LoadBaseObjectFor<TKey, TBase, TXref>(TXref xref)

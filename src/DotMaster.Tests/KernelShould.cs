@@ -10,6 +10,7 @@ namespace DotMaster.Tests
     {
 
         private Kernel kernel;
+
         private Mock<TestProvider> provider;
         private Mock<IMasterDataBase> db;
 
