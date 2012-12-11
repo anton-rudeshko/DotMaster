@@ -36,7 +36,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\BaseSourceDataProvider.cs" />
+    <Compile Include="I18n.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>I18n.resx</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IBaseObject.cs" />
+    <Compile Include="Interfaces\IControlTable.cs" />
     <Compile Include="Interfaces\ICrossReference.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\Impl\LongBaseObject.cs" />
@@ -49,8 +55,15 @@
     <Compile Include="Interfaces\ITrustStrategy.cs" />
     <Compile Include="Interfaces\IMasterDataBase.cs" />
     <Compile Include="Processing\Kernel.cs" />
+    <Compile Include="Processing\TrustReader.cs" />
     <Compile Include="Processing\TrustStrategyAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="I18n.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>I18n.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
