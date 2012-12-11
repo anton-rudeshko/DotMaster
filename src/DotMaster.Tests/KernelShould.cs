@@ -32,7 +32,7 @@ namespace DotMaster.Tests
             provider.Raise(a => a.OnData += null, testXref);
 
             // Verify
-            db.Verify(@base => @base.BaseObjectFor<TestBO, TestXref>(testXref));
+            db.Verify(@base => @base.BaseObjectFor<long, TestBO, TestXref>(testXref));
         }
 
         [Test]
@@ -41,13 +41,13 @@ namespace DotMaster.Tests
             // Arrange
             var testXref = new TestXref();
             var testBo = new TestBO();
-            db.Setup(a => a.BaseObjectFor<TestBO, TestXref>(testXref)).Returns(testBo);
+            db.Setup(a => a.BaseObjectFor<long, TestBO, TestXref>(testXref)).Returns(testBo);
 
             // Act
             provider.Raise(a => a.OnData += null, testXref);
 
             // Assert
-            db.Verify(@base => @base.AppendXrefTo(testBo, testXref));
+            db.Verify(@base => @base.AppendXrefTo<long, TestBO, TestXref>(testBo, testXref));
         }
     }
 }

@@ -3,9 +3,9 @@ using DotMaster.Core.Interfaces;
 
 namespace DotMaster.Core.Abstract
 {
-    public abstract class BaseSourceDataProvider<TBase, TXref> : ISourceDataProvider<TBase, TXref> 
-            where TXref : class, ICrossReference<TBase, TXref>
-            where TBase : class, IBaseObject<TBase, TXref>
+    public abstract class BaseSourceDataProvider<TKey, TBase, TXref> : ISourceDataProvider<TKey, TBase, TXref> 
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
     {
         public event Action<TXref> OnData;
 

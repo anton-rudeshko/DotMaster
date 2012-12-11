@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace DotMaster.Core.Interfaces
 {
-    public interface IBaseObject<TBase, TXref> : IEntity
-        where TBase : class, IBaseObject<TBase, TXref>
-        where TXref : class, ICrossReference<TBase, TXref>
+    public interface IBaseObject<TKey, TBase, TXref> : IEntity<TKey>
+        where TBase : class, IBaseObject<TKey, TBase, TXref>
+        where TXref : class, ICrossReference<TKey, TBase, TXref>
     {
         IList<TXref> Xrefs { get; set; }
 

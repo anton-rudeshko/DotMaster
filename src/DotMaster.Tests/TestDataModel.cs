@@ -5,18 +5,18 @@ using FluentNHibernate.Mapping;
 
 namespace DotMaster.Tests
 {
-    public class TestBO : IBaseObject<TestBO, TestXref>
+    public class TestBO : IBaseObject<long, TestBO, TestXref>
     {
-        public virtual string ObjKey { get; set; }
+        public virtual long ObjKey { get; set; }
         public virtual IList<TestXref> Xrefs { get; set; }
         public virtual DateTime LastUpdate { get; set; }
 
         public virtual string MyProperty { get; set; }
     }
 
-    public class TestXref : ICrossReference<TestBO, TestXref>
+    public class TestXref : ICrossReference<long, TestBO, TestXref>
     {
-        public virtual string ObjKey { get; set; }
+        public virtual long ObjKey { get; set; }
         public virtual string BaseObjKey { get; set; }
 
         public virtual string Source { get; set; }
@@ -28,7 +28,7 @@ namespace DotMaster.Tests
         public virtual DateTime UpdateDate { get; set; }
     }
 
-    public class TestProvider : ISourceDataProvider<TestBO, TestXref>
+    public class TestProvider : ISourceDataProvider<long, TestBO, TestXref>
     {
         public event Action<TestXref> OnData;
     }

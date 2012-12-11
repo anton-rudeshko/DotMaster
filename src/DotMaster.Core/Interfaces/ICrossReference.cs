@@ -2,9 +2,9 @@
 
 namespace DotMaster.Core.Interfaces
 {
-    public interface ICrossReference<TBase, TXref> : IEntity
-        where TXref : class, ICrossReference<TBase, TXref>
-        where TBase : class, IBaseObject<TBase, TXref>
+    public interface ICrossReference<TKey, TBase, TXref> : IEntity<TKey>
+        where TXref : class, ICrossReference<TKey, TBase, TXref>
+        where TBase : class, IBaseObject<TKey, TBase, TXref>
     {
         /// <summary>
         /// На какой BO смотрит этот xref
