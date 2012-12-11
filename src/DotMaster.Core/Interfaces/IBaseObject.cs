@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DotMaster.Core.Interfaces
 {
@@ -7,5 +8,7 @@ namespace DotMaster.Core.Interfaces
         where TXref : class, ICrossReference<TBase, TXref>
     {
         IList<TXref> Xrefs { get; set; }
+
+        DateTime LastUpdate { get; set; }
     }
 }

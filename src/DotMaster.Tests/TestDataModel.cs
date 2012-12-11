@@ -9,6 +9,7 @@ namespace DotMaster.Tests
     {
         public virtual string ObjKey { get; set; }
         public virtual IList<TestXref> Xrefs { get; set; }
+        public virtual DateTime LastUpdate { get; set; }
 
         public virtual string MyProperty { get; set; }
     }
@@ -24,7 +25,7 @@ namespace DotMaster.Tests
         public virtual TestBO Object { get; set; }
 
         public virtual TestBO BaseObject { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public virtual DateTime UpdateDate { get; set; }
     }
 
     public class TestProvider : ISourceDataProvider<TestBO, TestXref>
