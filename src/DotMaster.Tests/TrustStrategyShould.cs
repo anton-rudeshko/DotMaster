@@ -26,13 +26,35 @@ namespace DotMaster.Tests
         }
 
         [Test]
+        public void ThrowIfNoParameterlessConstructor()
+        {
+            Assert.Throws<ArgumentException>(() => new TrustStrategyAttribute(typeof (TestTrustStrategy)));
+        }
+
+        [Test]
         public void BeCreatedFromImplementingClass()
         {
-            var strategyAttribute = new TrustStrategyAttribute(typeof (TestTrustStrategy));
-            Assert.NotNull(strategyAttribute);
+            Assert.That(new TrustStrategyAttribute(typeof (TestTrustStrategyParameterless)), Is.Not.Null);
+        }
+
+        [Test]
+        public void CanCreateStrategyInstance()
+        {
+            var attribute = new TrustStrategyAttribute(typeof (TestTrustStrategyParameterless));
+            var strategyInstance = attribute.GetStrategyInstance();
+
+            Assert.That(strategyInstance, Is.Not.Null);
+            Assert.That(strategyInstance, Is.TypeOf<TestTrustStrategyParameterless>());
         }
 
         private class TestTrustStrategy : ITrustStrategy
+        {
+            public TestTrustStrategy(int a)
+            {
+            }
+        }
+
+        private class TestTrustStrategyParameterless : ITrustStrategy
         {
         }
     }

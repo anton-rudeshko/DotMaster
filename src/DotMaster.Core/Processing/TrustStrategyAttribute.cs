@@ -1,19 +1,23 @@
 ﻿using System;
+using System.Reflection;
 using DotMaster.Core.Interfaces;
 
 namespace DotMaster.Core.Processing
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
     public class TrustStrategyAttribute : Attribute 
     {
         private static readonly Type TrustStrategyInterface = typeof (ITrustStrategy);
 
         private readonly Type _trustStrategyType;
+        private static ConstructorInfo _constructor;
 
         public TrustStrategyAttribute(Type trustStrategyType)
         {
             CheckArguments(trustStrategyType);
+
             _trustStrategyType = trustStrategyType;
+            _constructor = trustStrategyType.GetConstructor(Type.EmptyTypes);
         }
 
         private static void CheckArguments(Type trustStrategyType)
@@ -30,6 +34,15 @@ namespace DotMaster.Core.Processing
             {
                 throw new ArgumentException("Trust strategy type must not be abstract or interface type", "trustStrategyType");
             }
+            if (trustStrategyType.GetConstructor(Type.EmptyTypes) == null)
+            {
+                throw new ArgumentException("Trust strategy type must have parameterless constructor", "trustStrategyType");
+            }
+        }
+
+        public ITrustStrategy GetStrategyInstance()
+        {
+            return (ITrustStrategy) _constructor.Invoke(new object[0]);
         }
     }
 }
