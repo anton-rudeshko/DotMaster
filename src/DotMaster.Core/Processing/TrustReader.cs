@@ -33,7 +33,16 @@ namespace DotMaster.Core.Processing
 
         public IDictionary<PropertyInfo, ITrustStrategy> ReadTrustRulesFrom(Type type)
         {
-            return type.GetProperties().Where(NotIgnored).ToDictionary(p => p, ReadTrustRulesFrom);
+            var dictionary = new Dictionary<PropertyInfo, ITrustStrategy>();
+            foreach (var propertyInfo in type.GetProperties().Where(NotIgnored))
+            {
+                var trustStrategy = ReadTrustRulesFrom(propertyInfo);
+                if (trustStrategy != null)
+                {
+                    dictionary.Add(propertyInfo, trustStrategy);
+                }
+            }
+            return dictionary;
         }
 
         public ITrustStrategy ReadTrustRulesFrom(PropertyInfo propertyInfo)

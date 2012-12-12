@@ -47,13 +47,21 @@ namespace DotMaster.Tests.Processing
         }
 
         [Test]
-        public void ReadTrustStrategy()
+        public void ReadTrustStrategyFromProperty()
         {
             var trustStrategy = reader.ReadTrustRulesFrom(typeof (C).GetProperty("MyProperty"));
 
             Assert.That(trustStrategy, Is.Not.Null);
             Assert.That(trustStrategy, Is.InstanceOf<ITrustStrategy>());
             Assert.That(trustStrategy, Is.InstanceOf<TestTrustStrategy>());
+        }
+
+        [Test]
+        public void ReadTrustStrategyFromType()
+        {
+            var trustStrategy = reader.ReadTrustRulesFrom(typeof (C));
+
+            Assert.That(trustStrategy.Count, Is.EqualTo(3));
         }
 
         private class A
@@ -70,6 +78,14 @@ namespace DotMaster.Tests.Processing
         {
             [TrustStrategy(typeof(TestTrustStrategy))]
             public int MyProperty { get; set; }
+            
+            [TrustStrategy(typeof(TestTrustStrategy))]
+            public int MyProperty1 { get; set; }
+            
+            [TrustStrategy(typeof(TestTrustStrategy))]
+            public int MyProperty2 { get; set; }            
+            
+            public int MyProperty3 { get; set; }
         }
     }
 
