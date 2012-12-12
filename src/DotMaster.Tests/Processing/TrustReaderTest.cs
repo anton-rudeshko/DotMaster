@@ -83,7 +83,7 @@ namespace DotMaster.Tests.Processing
             public int MyProperty1 { get; set; }
             
             [TrustStrategy(typeof(TestTrustStrategy))]
-            public int MyProperty2 { get; set; }            
+            public int MyProperty2 { get; set; }
             
             public int MyProperty3 { get; set; }
         }
@@ -91,5 +91,11 @@ namespace DotMaster.Tests.Processing
 
     internal class TestTrustStrategy : ITrustStrategy
     {
+        public int GetScore<TKey, TBase, TXref>(TBase baseObject, TXref xref) 
+            where TBase : class, IBaseObject<TKey, TBase, TXref> 
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
+        {
+            throw new NotImplementedException();
+        }
     }
 }

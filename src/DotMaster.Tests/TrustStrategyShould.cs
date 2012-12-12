@@ -47,7 +47,7 @@ namespace DotMaster.Tests
             Assert.That(strategyInstance, Is.TypeOf<TestTrustStrategyParameterless>());
         }
 
-        private class TestTrustStrategy : ITrustStrategy
+        private class TestTrustStrategy : TestTrustStrategyParameterless
         {
             public TestTrustStrategy(int a)
             {
@@ -56,6 +56,12 @@ namespace DotMaster.Tests
 
         private class TestTrustStrategyParameterless : ITrustStrategy
         {
+            public int GetScore<TKey, TBase, TXref>(TBase baseObject, TXref xref)
+                where TBase : class, IBaseObject<TKey, TBase, TXref> 
+                where TXref : class, ICrossReference<TKey, TBase, TXref>
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
