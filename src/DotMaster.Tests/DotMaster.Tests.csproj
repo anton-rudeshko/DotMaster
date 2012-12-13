@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GenerateSchema.cs" />
-    <Compile Include="KernelShould.cs" />
+    <Compile Include="KernelTest.cs" />
     <Compile Include="NHibernateSmokeTests.cs" />
     <Compile Include="NHibernateTestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
