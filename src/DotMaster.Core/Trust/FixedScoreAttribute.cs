@@ -5,13 +5,16 @@ namespace DotMaster.Core.Trust
 {
     public class FixedScoreAttribute : TrustStrategyAttribute
     {
-        public FixedScoreAttribute() : base(typeof (FixedScoreTrustStrategy))
+        private readonly int _score;
+
+        public FixedScoreAttribute(int score) : base(typeof (FixedScoreTrustStrategy))
         {
+            _score = score;
         }
 
         public override ITrustStrategy GetStrategyInstance()
         {
-            return new FixedScoreTrustStrategy();
+            return new FixedScoreTrustStrategy(_score);
         }
     }
 }

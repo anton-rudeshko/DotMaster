@@ -120,4 +120,10 @@
   <data name="TooManyStrategies" xml:space="preserve">
     <value>Property {0} contains more than one trust stategy attributes</value>
   </data>
+  <data name="XrefSourceIsEmpty" xml:space="preserve">
+    <value>Cross reference source should be not empty</value>
+  </data>
+  <data name="XrefSourceKeyIsEmpty" xml:space="preserve">
+    <value>Cross reference source key should be not empty</value>
+  </data>
 </root>

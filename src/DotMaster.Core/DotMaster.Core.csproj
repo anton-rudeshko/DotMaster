@@ -60,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trust\FixedScoreAttribute.cs" />
     <Compile Include="Trust\FixedScoreTrustStrategy.cs" />
+    <Compile Include="Trust\LastUpdateDateTrustStrategy.cs" />
     <Compile Include="Trust\LinearDecreaseAttribute.cs" />
     <Compile Include="Trust\LinearDecreaseTrustStrategy.cs" />
   </ItemGroup>
@@ -67,6 +68,7 @@
     <EmbeddedResource Include="I18n.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>I18n.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

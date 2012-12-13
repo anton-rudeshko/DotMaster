@@ -68,5 +68,23 @@ namespace DotMaster.Core {
                 return ResourceManager.GetString("TooManyStrategies", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cross reference source should be not empty.
+        /// </summary>
+        internal static string XrefSourceIsEmpty {
+            get {
+                return ResourceManager.GetString("XrefSourceIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cross reference source key should be not empty.
+        /// </summary>
+        internal static string XrefSourceKeyIsEmpty {
+            get {
+                return ResourceManager.GetString("XrefSourceKeyIsEmpty", resourceCulture);
+            }
+        }
     }
 }
