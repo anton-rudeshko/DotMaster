@@ -24,7 +24,13 @@ namespace DotMaster.Core.Abstract
             }
             if (string.IsNullOrWhiteSpace(xref.SourceKey))
             {
-                throw new ArgumentException("Source key can not be empty", "xref");
+                throw new ArgumentException(I18n.XrefSourceKeyIsEmpty, "xref");
+            }
+
+            // automatically update last update date if not set
+            if (xref.LastUpdate == DateTime.MinValue)
+            {
+                xref.LastUpdate = DateTime.Now;
             }
             xref.Source = Source;
             if (OnData != null)
