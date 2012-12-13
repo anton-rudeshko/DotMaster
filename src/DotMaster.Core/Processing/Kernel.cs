@@ -77,26 +77,19 @@ namespace DotMaster.Core.Processing
             RecalculateTrust<TKey, TBase, TXref>(baseObject);
         }
 
-        private void RecalculateTrust<TKey, TBase, TXref>(TBase baseObject)
-            where TBase : class, IBaseObject<TKey, TBase, TXref>
-            where TXref : class, ICrossReference<TKey, TBase, TXref>
+        private void RecalculateTrust<K, B, X>(B baseObject)
+            where B : class, IBaseObject<K, B, X>
+            where X : class, ICrossReference<K, B, X>
         {
             Debug.Assert(baseObject != null);
             Debug.Assert(baseObject.Xrefs != null);
             Debug.Assert(baseObject.Xrefs.Count > 0);
 
-            foreach (var property in ReflectionUtils.GetMasteredProperties(typeof (TBase)))
+            foreach (var property in ReflectionUtils.GetMasteredProperties(typeof (B)))
             {
                 Debug.WriteLine("Processing property " + property.Name);
-                var mostTrusted = baseObject.Xrefs[0];
-
-                foreach (var xref in baseObject.Xrefs)
-                {
-                    var trustStrategy = GetTrustStrategy<TKey, TBase, TXref>(property, xref.Source);
-                    // todo: calc trust
-                }
-
-                CopyValue<TKey, TBase, TXref>(property, @from: mostTrusted.ObjectData, to: baseObject);
+                var mostTrusted = GetMostTrustedXref<K, B, X>(baseObject, property);
+                CopyValue<K, B, X>(property, @from: mostTrusted.ObjectData, to: baseObject);
             }
 
             baseObject.LastUpdate = baseObject.Xrefs.Max(x => x.LastUpdate);
@@ -104,51 +97,46 @@ namespace DotMaster.Core.Processing
             // todo: how to handle BO deletion?
             // если нет траста, обновляем поле по LUD
 
-            MasterDB.Save<TKey, TBase, TXref>(baseObject);
+            MasterDB.Save<K, B, X>(baseObject);
         }
 
-        private static void CopyValue<TKey, TBase, TXref>(PropertyInfo property, TBase @from, TBase to)
-            where TBase : class, IBaseObject<TKey, TBase, TXref>
-            where TXref : class, ICrossReference<TKey, TBase, TXref>
+        private X GetMostTrustedXref<K, B, X>(B baseObject, PropertyInfo property)
+            where B : class, IBaseObject<K, B, X>
+            where X : class, ICrossReference<K, B, X>
+        {
+            Debug.Assert(baseObject.Xrefs.Count > 0);
+
+            // Считаем траст для всех xref и группируем по нему
+            // Берём группу с наибольшим трастом
+            // Берём наиболее свежий xref из группы
+            return baseObject.Xrefs
+                .GroupBy(xref => CalculateTrust<K, B, X>(property, baseObject, xref))
+                .OrderByDescending(group => group.Key).First()
+                .OrderByDescending(xref => xref.LastUpdate).First();
+        }
+
+        private int CalculateTrust<K, B, X>(PropertyInfo property, B baseObject, X xref)
+            where B : class, IBaseObject<K, B, X>
+            where X : class, ICrossReference<K, B, X>
+        {
+            return GetTrustStrategy<K, B, X>(property, xref.Source).GetScore<K, B, X>(baseObject, xref);
+        }
+
+        private static void CopyValue<K, B, X>(PropertyInfo property, B @from, B to)
+            where B : class, IBaseObject<K, B, X>
+            where X : class, ICrossReference<K, B, X>
         {
             property.SetValue(to, property.GetValue(@from, null), null);
         }
 
-        private ITrustStrategy GetTrustStrategy<TKey, TBase, TXref>(PropertyInfo property, string source)
-            where TBase : class, IBaseObject<TKey, TBase, TXref>
-            where TXref : class, ICrossReference<TKey, TBase, TXref>
+        private ITrustStrategy GetTrustStrategy<K, B, X>(PropertyInfo property, string source)
+            where B : class, IBaseObject<K, B, X>
+            where X : class, ICrossReference<K, B, X>
         {
-            Debug.Assert(source != null);
+            Debug.Assert(string.IsNullOrWhiteSpace(source));
 
             return TrustStrategies.ContainsKey(property) ? TrustStrategies[property] : DefaultTrustStrategy;
         }
 
-        private TBase LoadBaseObjectFor<TKey, TBase, TXref>(TXref xref)
-        {
-            throw new NotImplementedException();
-        }
-
-        private TBase CreateNewBase<TKey, TBase, TXref>(TXref xref)
-            where TBase : class, IBaseObject<TKey, TBase, TXref>
-            where TXref : class, ICrossReference<TKey, TBase, TXref>
-        {
-            TBase newBaseObject = null;
-            // todo: copy fields from xref to BO
-            return newBaseObject;
-        }
-
-        private void Save<TKey, TBase, TXref>(TXref xref)
-            where TXref : class, ICrossReference<TKey, TBase, TXref>
-            where TBase : class, IBaseObject<TKey, TBase, TXref>
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void UpdateXref<TKey, TBase, TXref>(TXref presentXref, TXref xref)
-            where TXref : class, ICrossReference<TKey, TBase, TXref>
-            where TBase : class, IBaseObject<TKey, TBase, TXref>
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
