@@ -7,7 +7,7 @@ using NHibernate.Linq;
 
 namespace DotMaster.NHibernate
 {
-    public class NHibernateMasterDB : IMasterDataBase
+    public class NHibernateMasterDB // : IMasterDataBase
     {
         private readonly ISessionFactory _sessionFactory;
 

@@ -15,7 +15,9 @@ namespace DotMaster.Tests
 
     public class TestProvider : LongSourceDataProvider<TestBO, TestXref>
     {
-
+        public TestProvider() : base("TestSource")
+        {
+        }
     }
 
     public class TestBOMap : ClassMap<TestBO>

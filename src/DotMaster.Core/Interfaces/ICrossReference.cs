@@ -34,6 +34,6 @@ namespace DotMaster.Core.Interfaces
         /// <summary>
         /// Дата и время пришедшего обновления
         /// </summary>
-        DateTime UpdateDate { get; set; }
+        DateTime LastUpdate { get; set; }
     }
 }

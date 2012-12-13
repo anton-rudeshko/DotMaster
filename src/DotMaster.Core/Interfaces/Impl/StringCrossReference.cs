@@ -15,6 +15,6 @@ namespace DotMaster.Core.Interfaces.Impl
         public virtual TBase ObjectData { get; set; }
         public virtual TBase BaseObject { get; set; }
 
-        public virtual DateTime UpdateDate { get; set; }
+        public virtual DateTime LastUpdate { get; set; }
     }
 }
