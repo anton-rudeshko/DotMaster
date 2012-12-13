@@ -55,6 +55,7 @@
     <Compile Include="Interfaces\ITrustStrategy.cs" />
     <Compile Include="Interfaces\IMasterDataBase.cs" />
     <Compile Include="Processing\Kernel.cs" />
+    <Compile Include="Trust\TrustProcessor.cs" />
     <Compile Include="Utils\ReflectionUtils.cs" />
     <Compile Include="Processing\TrustReader.cs" />
     <Compile Include="Processing\TrustStrategyAttribute.cs" />
