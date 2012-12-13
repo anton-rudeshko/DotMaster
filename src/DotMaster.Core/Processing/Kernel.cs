@@ -89,7 +89,7 @@ namespace DotMaster.Core.Processing
             {
                 Debug.WriteLine("Processing property " + property.Name);
                 var mostTrusted = GetMostTrustedXref<K, B, X>(baseObject, property);
-                CopyValue<K, B, X>(property, @from: mostTrusted.ObjectData, to: baseObject);
+                Copy(property, @from: mostTrusted.ObjectData, to: baseObject);
             }
 
             baseObject.LastUpdate = baseObject.Xrefs.Max(x => x.LastUpdate);
@@ -122,21 +122,18 @@ namespace DotMaster.Core.Processing
             return GetTrustStrategy<K, B, X>(property, xref.Source).GetScore<K, B, X>(baseObject, xref);
         }
 
-        private static void CopyValue<K, B, X>(PropertyInfo property, B @from, B to)
-            where B : class, IBaseObject<K, B, X>
-            where X : class, ICrossReference<K, B, X>
-        {
-            property.SetValue(to, property.GetValue(@from, null), null);
-        }
-
         private ITrustStrategy GetTrustStrategy<K, B, X>(PropertyInfo property, string source)
             where B : class, IBaseObject<K, B, X>
             where X : class, ICrossReference<K, B, X>
         {
-            Debug.Assert(string.IsNullOrWhiteSpace(source));
+            Debug.Assert(string.IsNullOrWhiteSpace(source), "Source should be not empty");
 
             return TrustStrategies.ContainsKey(property) ? TrustStrategies[property] : DefaultTrustStrategy;
         }
 
+        private static void Copy(PropertyInfo property, object @from, object to)
+        {
+            property.SetValue(to, property.GetValue(@from, null), null);
+        }
     }
 }
