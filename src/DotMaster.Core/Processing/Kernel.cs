@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using DotMaster.Core.Interfaces;
 using DotMaster.Core.Trust;
+using DotMaster.Core.Utils;
 
 namespace DotMaster.Core.Processing
 {
@@ -84,11 +85,7 @@ namespace DotMaster.Core.Processing
             Debug.Assert(baseObject.Xrefs != null);
             Debug.Assert(baseObject.Xrefs.Count > 0);
 
-            var properties = typeof (TBase).GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
-            var objKeyProperty = typeof (IBaseObject<TKey, TBase, TXref>).GetProperty("ObjKey");
-
-            // todo: do not copy ObjKey and Xrefs
-            foreach (var property in properties)
+            foreach (var property in ReflectionUtils.GetMasteredProperties(typeof (TBase)))
             {
                 Debug.WriteLine("Processing property " + property.Name);
                 var mostTrusted = baseObject.Xrefs[0];
@@ -99,12 +96,10 @@ namespace DotMaster.Core.Processing
                     // todo: calc trust
                 }
 
-                CopyValue<TKey, TBase, TXref>(property, from: mostTrusted.ObjectData, to: baseObject);
+                CopyValue<TKey, TBase, TXref>(property, @from: mostTrusted.ObjectData, to: baseObject);
             }
 
             baseObject.LastUpdate = baseObject.Xrefs.Max(x => x.LastUpdate);
-
-            //            baseObject.LastUpdate = xref.LastUpdate;
 
             // todo: how to handle BO deletion?
             // если нет траста, обновляем поле по LUD

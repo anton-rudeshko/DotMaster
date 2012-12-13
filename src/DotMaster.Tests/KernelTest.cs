@@ -33,7 +33,6 @@ namespace DotMaster.Tests
             testXref = new TestXref { SourceKey = "123", ObjectData = objectData, LastUpdate = now };
         }
 
-
         [Test]
         public void NewBaseObjectCase()
         {
