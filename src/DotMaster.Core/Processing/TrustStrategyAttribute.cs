@@ -4,12 +4,14 @@ using DotMaster.Core.Interfaces;
 
 namespace DotMaster.Core.Processing
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true, AllowMultiple = true)]
     public class TrustStrategyAttribute : Attribute 
     {
         private static readonly Type TrustStrategyInterface = typeof (ITrustStrategy);
 
         private static ConstructorInfo _constructor;
+
+        public string Source { get; set; }
 
         public TrustStrategyAttribute(Type trustStrategyType)
         {
