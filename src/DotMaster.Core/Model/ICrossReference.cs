@@ -2,6 +2,12 @@
 
 namespace DotMaster.Core.Model
 {
+    /// <summary>
+    /// Интерфейс, описывающий перекрёстную ссылку.
+    /// </summary>
+    /// <typeparam name="TKey">Тип ключа</typeparam>
+    /// <typeparam name="TBase">Тип базового объекта</typeparam>
+    /// <typeparam name="TXref">Тип перекрёстной ссылки</typeparam>
     public interface ICrossReference<TKey, TBase, TXref> : IEntity<TKey>
         where TXref : class, ICrossReference<TKey, TBase, TXref>
         where TBase : class, IBaseObject<TKey, TBase, TXref>

@@ -44,8 +44,9 @@ namespace DotMaster.Tests
         public XrefMap()
         {
             Id(x => x.ObjKey).Not.Nullable();
-
+            
             Map(x => x.LastUpdate).Not.Nullable();
+            Map(x => x.Source).Not.Nullable();
             Map(x => x.SourceKey).Not.Nullable();
 
             References(x => x.BaseObject).Column("BaseObjKey").Not.Nullable();
@@ -65,7 +66,8 @@ namespace DotMaster.Tests
     {
         public TestXrefMap()
         {
-
+            Map(x => x.ObjectData.MyProperty);
+            Map(x => x.ObjectData.MyProperty2);
         }
     }
 }
