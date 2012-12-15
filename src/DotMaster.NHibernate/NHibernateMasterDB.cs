@@ -26,7 +26,7 @@ namespace DotMaster.NHibernate
             where TBase : class, IBaseObject<TKey, TBase, TXref>
             where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
-            return CurrentSession.Query<TXref>().FirstOrDefault(x => x.SourceKey == sourceKey && x.Source == source);
+            return CurrentSession.Query<TXref>().SingleOrDefault(x => x.SourceKey == sourceKey && x.Source == source);
         }
 
         public TBase Save<TKey, TBase, TXref>(TBase baseObject) 

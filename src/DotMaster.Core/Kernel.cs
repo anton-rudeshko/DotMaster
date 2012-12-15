@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using DotMaster.Core.Model;
 using DotMaster.Core.Trust;
 
@@ -57,12 +58,14 @@ namespace DotMaster.Core
             TBase baseObject;
             if (presentXref != null)
             {
+                Debug.WriteLine("Found present xref " + presentXref.BaseObjKey);
                 presentXref.ObjectData = xref.ObjectData;
                 presentXref.LastUpdate = xref.LastUpdate;
                 baseObject = presentXref.BaseObject;
             }
             else
             {
+                Debug.WriteLine("No present xref found, creating new base object");
                 baseObject = new TBase { Xrefs = new List<TXref> { xref } };
             }
 
