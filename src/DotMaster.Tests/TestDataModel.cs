@@ -1,6 +1,5 @@
-﻿using DotMaster.Core.Model;
-using DotMaster.Core.Model.Impl;
-using FluentNHibernate.Mapping;
+﻿using DotMaster.Core.Model.Impl;
+using DotMaster.NHibernate.Mappings;
 
 namespace DotMaster.Tests
 {
@@ -23,37 +22,7 @@ namespace DotMaster.Tests
         }
     }
 
-    public class BaseObjectMap<TKey, TBase, TXref> : ClassMap<TBase>
-        where TBase : class, IBaseObject<TKey, TBase, TXref>
-        where TXref : class, ICrossReference<TKey, TBase, TXref>
-    {
-        public BaseObjectMap()
-        {
-            Id(x => x.ObjKey).Not.Nullable();
-
-            Map(x => x.LastUpdate).Not.Nullable();
-
-            HasMany(x => x.Xrefs).KeyColumn("BaseObjKey");
-        }
-    }
-
-    public class XrefMap<TKey, TBase, TXref> : ClassMap<TXref>
-        where TBase : class, IBaseObject<TKey, TBase, TXref>
-        where TXref : class, ICrossReference<TKey, TBase, TXref>
-    {
-        public XrefMap()
-        {
-            Id(x => x.ObjKey).Not.Nullable();
-            
-            Map(x => x.LastUpdate).Not.Nullable();
-            Map(x => x.Source).Not.Nullable();
-            Map(x => x.SourceKey).Not.Nullable();
-
-            References(x => x.BaseObject).Column("BaseObjKey").Not.Nullable();
-        }
-    }
-
-    public class TestBOMap : BaseObjectMap<long, TestBO, TestXref>
+    public class TestBOMap : LongBaseObjectMap<TestBO, TestXref>
     {
         public TestBOMap()
         {
@@ -62,7 +31,7 @@ namespace DotMaster.Tests
         }
     }
 
-    public class TestXrefMap : XrefMap<long, TestBO, TestXref>
+    public class TestXrefMap : LongXrefMap<TestBO, TestXref>
     {
         public TestXrefMap()
         {

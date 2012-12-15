@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappings\LongBaseObjectMap.cs" />
+    <Compile Include="Mappings\LongXrefMap.cs" />
+    <Compile Include="Mappings\StringBaseObjectMap.cs" />
+    <Compile Include="Mappings\StringXrefMap.cs" />
+    <Compile Include="Mappings\XrefMap.cs" />
+    <Compile Include="Mappings\BaseObjectMap.cs" />
     <Compile Include="NHibernateMasterDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
