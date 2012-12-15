@@ -1,32 +1,33 @@
 ﻿using DotMaster.Core.Interfaces;
-using DotMaster.Core.Processing;
 
 namespace DotMaster.Core.Trust
 {
-    public class LinearDecreaseAttribute : TrustStrategyAttribute
+    /// <summary>
+    /// Линейное уменьшение доверительного уровня со временем.
+    /// </summary>
+    public class LinearDecreaseAttribute : AbstractTrustStrategyAttribute
     {
         /// <summary>
         /// Начальный доверительный уровень (в момент обновления)
         /// </summary>
-        public int StartScore { get; set; }
+        public int From { get; set; }
 
         /// <summary>
         /// Конечный доверительный уровень
         /// </summary>
-        public int EndScore { get; set; }
+        public int To { get; set; }
 
         /// <summary>
-        /// Время перехода от <see cref="StartScore"/> к <see cref="EndScore"/>
+        /// Время перехода от <see cref="From"/> к <see cref="To"/>
         /// </summary>
         public int Decay { get; set; }
 
-        public LinearDecreaseAttribute() : base(typeof (LinearDecreaseTrustStrategy))
-        {
-        }
-
+        /// <summary>
+        /// Создать экземпляр стратегии
+        /// </summary>
         public override ITrustStrategy GetStrategyInstance()
         {
-            return new LinearDecreaseTrustStrategy(StartScore, EndScore, Decay);
+            return new LinearDecreaseTrustStrategy(From, To, Decay);
         }
     }
 }

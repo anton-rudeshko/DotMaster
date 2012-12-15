@@ -1,4 +1,6 @@
-﻿namespace DotMaster.Core.Interfaces
+﻿using DotMaster.Core.Interfaces;
+
+namespace DotMaster.Core.Trust
 {
     public interface ITrustStrategy
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using DotMaster.Core.Interfaces;
 
-namespace DotMaster.Core.Processing
+namespace DotMaster.Core.Trust
 {
     public class TrustReader
     {
@@ -47,7 +47,7 @@ namespace DotMaster.Core.Processing
 
         public ITrustStrategy ReadTrustRulesFrom(PropertyInfo propertyInfo)
         {
-            var trustStrategyAttribute = propertyInfo.GetCustomAttributes(true).OfType<TrustStrategyAttribute>().FirstOrDefault();
+            var trustStrategyAttribute = propertyInfo.GetCustomAttributes(true).OfType<AbstractTrustStrategyAttribute>().FirstOrDefault();
             return trustStrategyAttribute == null ? null : trustStrategyAttribute.GetStrategyInstance();
         }
 

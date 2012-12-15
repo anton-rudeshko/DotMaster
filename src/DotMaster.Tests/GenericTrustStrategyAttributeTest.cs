@@ -1,46 +1,46 @@
 ﻿using System;
 using DotMaster.Core.Interfaces;
-using DotMaster.Core.Processing;
+using DotMaster.Core.Trust;
 using NUnit.Framework;
 
 namespace DotMaster.Tests
 {
-    public class TrustStrategyShould
+    public class GenericTrustStrategyAttributeTest
     {
         [Test]
         public void NotBeCreatedFromNull()
         {
-            Assert.Throws<ArgumentNullException>(() => new TrustStrategyAttribute(null));
+            Assert.Throws<ArgumentNullException>(() => new GenericTrustStrategyAttribute(null));
         }
 
         [Test]
         public void NotBeCreatedFromTypeNotInheritingITrustStrategy()
         {
-            Assert.Throws<ArgumentException>(() => new TrustStrategyAttribute(typeof (Double)));
+            Assert.Throws<ArgumentException>(() => new GenericTrustStrategyAttribute(typeof (Double)));
         }
 
         [Test]
         public void NotBeCreatedFromInterface()
         {
-            Assert.Throws<ArgumentException>(() => new TrustStrategyAttribute(typeof (ITrustStrategy)));
+            Assert.Throws<ArgumentException>(() => new GenericTrustStrategyAttribute(typeof (ITrustStrategy)));
         }
 
         [Test]
         public void ThrowIfNoParameterlessConstructor()
         {
-            Assert.Throws<ArgumentException>(() => new TrustStrategyAttribute(typeof (TestTrustStrategy)));
+            Assert.Throws<ArgumentException>(() => new GenericTrustStrategyAttribute(typeof (TestTrustStrategy)));
         }
 
         [Test]
         public void BeCreatedFromImplementingClass()
         {
-            Assert.That(new TrustStrategyAttribute(typeof (TestTrustStrategyParameterless)), Is.Not.Null);
+            Assert.That(new GenericTrustStrategyAttribute(typeof (TestTrustStrategyParameterless)), Is.Not.Null);
         }
 
         [Test]
         public void CanCreateStrategyInstance()
         {
-            var attribute = new TrustStrategyAttribute(typeof (TestTrustStrategyParameterless));
+            var attribute = new GenericTrustStrategyAttribute(typeof (TestTrustStrategyParameterless));
             var strategyInstance = attribute.GetStrategyInstance();
 
             Assert.That(strategyInstance, Is.Not.Null);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DotMaster.Core.Interfaces;
 using DotMaster.Core.Trust;
 
-namespace DotMaster.Core.Processing
+namespace DotMaster.Core
 {
     public class Kernel
     {

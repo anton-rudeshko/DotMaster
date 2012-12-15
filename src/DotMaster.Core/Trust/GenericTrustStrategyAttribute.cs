@@ -2,18 +2,16 @@
 using System.Reflection;
 using DotMaster.Core.Interfaces;
 
-namespace DotMaster.Core.Processing
+namespace DotMaster.Core.Trust
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true, AllowMultiple = true)]
-    public class TrustStrategyAttribute : Attribute 
+    public class GenericTrustStrategyAttribute : AbstractTrustStrategyAttribute
     {
         private static readonly Type TrustStrategyInterface = typeof (ITrustStrategy);
 
         private static ConstructorInfo _constructor;
 
-        public string Source { get; set; }
-
-        public TrustStrategyAttribute(Type trustStrategyType)
+        public GenericTrustStrategyAttribute(Type trustStrategyType)
         {
             if (trustStrategyType == null)
             {
@@ -34,7 +32,7 @@ namespace DotMaster.Core.Processing
             }
         }
 
-        public virtual ITrustStrategy GetStrategyInstance()
+        public override ITrustStrategy GetStrategyInstance()
         {
             return (ITrustStrategy) _constructor.Invoke(new object[0]);
         }

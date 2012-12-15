@@ -1,6 +1,6 @@
 ﻿using System;
 using DotMaster.Core.Interfaces;
-using DotMaster.Core.Processing;
+using DotMaster.Core.Trust;
 using NUnit.Framework;
 
 namespace DotMaster.Tests.Processing
@@ -57,6 +57,16 @@ namespace DotMaster.Tests.Processing
         }
 
         [Test]
+        public void InheritedTrustStrategyAttribute()
+        {
+            var trustStrategy = reader.ReadTrustRulesFrom(typeof (C).GetProperty("MyProperty1"));
+
+            Assert.That(trustStrategy, Is.Not.Null);
+            Assert.That(trustStrategy, Is.InstanceOf<ITrustStrategy>());
+            Assert.That(trustStrategy, Is.InstanceOf<FixedScoreTrustStrategy>());
+        }
+
+        [Test]
         public void ReadTrustStrategyFromType()
         {
             var trustStrategy = reader.ReadTrustRulesFrom(typeof (C));
@@ -76,13 +86,13 @@ namespace DotMaster.Tests.Processing
 
         private class C
         {
-            [TrustStrategy(typeof(TestTrustStrategy))]
+            [GenericTrustStrategy(typeof(TestTrustStrategy))]
             public int MyProperty { get; set; }
             
-            [TrustStrategy(typeof(TestTrustStrategy))]
+            [FixedScore(10)]
             public int MyProperty1 { get; set; }
             
-            [TrustStrategy(typeof(TestTrustStrategy))]
+            [LinearDecrease(From = 90, To = 10, Decay = 50)]
             public int MyProperty2 { get; set; }
             
             public int MyProperty3 { get; set; }

@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using DotMaster.Core.Interfaces;
-using DotMaster.Core.Processing;
 using DotMaster.Core.Utils;
 
 namespace DotMaster.Core.Trust
