@@ -9,7 +9,7 @@ namespace DotMaster.Tests.Utils
         [Test]
         public void MyTest()
         {
-            Assert.That(ReflectionUtils.NameOf<TestBO>(x => x.MyProperty), Is.EqualTo("MyProperty"));
+            Assert.That(ReflectionUtils.NameOf((TestBO x) => x.MyProperty), Is.EqualTo("MyProperty"));
         }
     }
 }

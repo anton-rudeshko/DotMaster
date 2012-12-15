@@ -1,4 +1,5 @@
 ﻿using DotMaster.Core.Model;
+using DotMaster.Core.Utils;
 using FluentNHibernate.Mapping;
 
 namespace DotMaster.NHibernate.Mappings
@@ -13,7 +14,7 @@ namespace DotMaster.NHibernate.Mappings
 
             Map(x => x.LastUpdate).Not.Nullable();
 
-            HasMany(x => x.Xrefs).KeyColumn("BaseObjKey");
+            HasMany(x => x.Xrefs).KeyColumn(ReflectionUtils.NameOf((TXref x) => x.BaseObjKey));
         }
     }
 }

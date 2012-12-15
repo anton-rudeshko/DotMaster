@@ -16,7 +16,7 @@ namespace DotMaster.Core.Utils
             property.SetValue(to, property.GetValue(@from, null), null);
         }
 
-        public static string NameOf<TSource>(Expression<Func<TSource, object>> selector)
+        public static string NameOf<TSource, TResult>(Expression<Func<TSource, TResult>> selector)
         {
             var type = typeof (TSource);
 

@@ -1,4 +1,5 @@
 ﻿using DotMaster.Core.Model;
+using DotMaster.Core.Utils;
 using FluentNHibernate.Mapping;
 
 namespace DotMaster.NHibernate.Mappings
@@ -15,7 +16,7 @@ namespace DotMaster.NHibernate.Mappings
             Map(x => x.Source).Not.Nullable();
             Map(x => x.SourceKey).Not.Nullable();
 
-            References(x => x.BaseObject).Column("BaseObjKey").Not.Nullable();
+            References(x => x.BaseObject).Column(ReflectionUtils.NameOf((TXref x) => x.BaseObjKey)).Not.Nullable();
         }
     }
 }
