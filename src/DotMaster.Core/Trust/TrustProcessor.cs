@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -10,25 +10,57 @@ namespace DotMaster.Core.Trust
 {
     public class TrustProcessor
     {
-        public IDictionary<PropertyInfo, IDictionary<string, ITrustStrategy>> TrustStrategies { get; set; }
+        public AppTrust AppTrust { get; set; }
 
-        public TypeTrustReader TypeTrustReader { get; set; }
+        public AppTrustReader AppTrustReader { get; set; }
 
         public ITrustStrategy DefaultTrustStrategy { get; set; }
 
-        public TrustProcessor(ITrustStrategy defaultTrustStrategy)
+        public TrustProcessor() 
+            : this(new FixedScoreTrustStrategy(0))
         {
-            DefaultTrustStrategy = defaultTrustStrategy ?? new FixedScoreTrustStrategy(0);
-            TrustStrategies = new Dictionary<PropertyInfo, IDictionary<string, ITrustStrategy>>();
-            TypeTrustReader = new TypeTrustReader();
+        }
+
+        public TrustProcessor(ITrustStrategy defaultTrustStrategy)
+            : this(defaultTrustStrategy, new AppTrustReader())
+        {
+        }
+
+        public TrustProcessor(ITrustStrategy defaultTrustStrategy, AppTrustReader appTrustReader)
+            : this(defaultTrustStrategy, appTrustReader, appTrustReader.ReadTrustRulesFromCurrentDomain())
+        {
+        }
+
+        public TrustProcessor(ITrustStrategy defaultTrustStrategy, AppTrustReader appTrustReader, AppTrust appTrust)
+        {
+            if (defaultTrustStrategy == null)
+            {
+                throw new ArgumentNullException("defaultTrustStrategy");
+            }
+            if (appTrustReader == null)
+            {
+                throw new ArgumentNullException("appTrustReader");
+            }
+            if (appTrust == null)
+            {
+                throw new ArgumentNullException("appTrust");
+            }
+            AppTrust = appTrust;
+            AppTrustReader = appTrustReader;
+            DefaultTrustStrategy = defaultTrustStrategy;
         }
 
         public void CalculateTrust<K, B, X>(B baseObject)
             where B : class, IBaseObject<K, B, X>
             where X : class, ICrossReference<K, B, X>
         {
+            if (baseObject == null)
+            {
+                throw new ArgumentNullException("baseObject");
+            }
+
             Debug.WriteLine("Calculating trust for " + baseObject);
-            Debug.Assert(baseObject != null);
+
             Debug.Assert(baseObject.Xrefs != null);
             Debug.Assert(baseObject.Xrefs.Count > 0);
 
@@ -61,18 +93,14 @@ namespace DotMaster.Core.Trust
             where B : class, IBaseObject<K, B, X>
             where X : class, ICrossReference<K, B, X>
         {
-            return GetTrustStrategy<K, B, X>(property, xref.Source).GetScore<K, B, X>(baseObject, xref);
+            return GetTrustStrategy<K, B, X>(property, xref).GetScore<K, B, X>(baseObject, xref);
         }
 
-        private ITrustStrategy GetTrustStrategy<K, B, X>(PropertyInfo property, string source)
-            where B : class, IBaseObject<K, B, X>
+        private ITrustStrategy GetTrustStrategy<K, B, X>(PropertyInfo property, X xref) 
+            where B : class, IBaseObject<K, B, X> 
             where X : class, ICrossReference<K, B, X>
         {
-            Debug.Assert(!string.IsNullOrWhiteSpace(source), "ForSource should be not empty");
-
-            return TrustStrategies.ContainsKey(property) && TrustStrategies[property].ContainsKey(source)
-                       ? TrustStrategies[property][source]
-                       : DefaultTrustStrategy;
+            return AppTrust.GetTrustStrategy(typeof(B), property.Name, xref.Source) ?? DefaultTrustStrategy;
         }
     }
 }

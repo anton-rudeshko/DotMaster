@@ -10,15 +10,18 @@ namespace DotMaster.Core
         private readonly TrustProcessor _trustProcessor;
         public IMasterDataBase MasterDB { get; set; }
 
-        public Kernel(IMasterDataBase masterDB = null, ITrustStrategy defaultTrustStrategy = null)
+        public Kernel(IMasterDataBase masterDB = null) : this(masterDB, new TrustProcessor())
         {
-            MasterDB = masterDB;
-            _trustProcessor = new TrustProcessor(defaultTrustStrategy);
         }
 
-        public void Initialize()
+        public Kernel(IMasterDataBase masterDB, TrustProcessor trustProcessor)
         {
-//            TrustStrategies = TypeTrustReader.ReadTrustRulesFromCurrentDomain();
+            if (trustProcessor == null)
+            {
+                throw new ArgumentNullException("trustProcessor");
+            }
+            MasterDB = masterDB;
+            _trustProcessor = trustProcessor;
         }
 
         public void RegisterDataProvider<TKey, TBase, TXref>(ISourceDataProvider<TKey, TBase, TXref> dataProvider)
