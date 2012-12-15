@@ -8,7 +8,7 @@ namespace DotMaster.Tests
         [Test]
         public void GenerateMusicSchema()
         {
-//            NHibernateTestHelper.PrintSchema(NHibernateTestHelper.CreateTestConfiguration<Track>());
+//            NHibernateTestHelper.PrintSchema(NHibernateTestHelper.CreateTestConfiguration<TestBO>());
         }
     }
 }
