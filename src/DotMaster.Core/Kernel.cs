@@ -18,7 +18,7 @@ namespace DotMaster.Core
 
         public void Initialize()
         {
-//            TrustStrategies = TrustReader.ReadTrustRulesFromCurrentDomain();
+//            TrustStrategies = TypeTrustReader.ReadTrustRulesFromCurrentDomain();
         }
 
         public void RegisterDataProvider<TKey, TBase, TXref>(ISourceDataProvider<TKey, TBase, TXref> dataProvider)

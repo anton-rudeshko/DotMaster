@@ -1,4 +1,4 @@
-﻿using DotMaster.Core.Interfaces.Impl;
+﻿using DotMaster.Core.Model.Impl;
 using FluentNHibernate.Mapping;
 
 namespace DotMaster.Tests
@@ -6,6 +6,8 @@ namespace DotMaster.Tests
     public class TestBO : LongBaseObject<TestBO, TestXref>
     {
         public virtual string MyProperty { get; set; }
+
+        public virtual string MyProperty2 { get; set; }
     }
 
     public class TestXref : LongCrossReference<TestBO, TestXref>

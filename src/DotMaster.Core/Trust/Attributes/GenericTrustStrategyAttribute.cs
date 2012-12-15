@@ -3,7 +3,6 @@ using System.Reflection;
 
 namespace DotMaster.Core.Trust.Attributes
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true, AllowMultiple = true)]
     public class GenericTrustStrategyAttribute : AbstractTrustStrategyAttribute
     {
         private static readonly Type TrustStrategyInterface = typeof (ITrustStrategy);

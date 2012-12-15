@@ -60,7 +60,11 @@
     <Compile Include="NHibernateTestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDataModel.cs" />
-    <Compile Include="Trust\TrustReaderTest.cs" />
+    <Compile Include="Trust\AppTrustReaderTest.cs" />
+    <Compile Include="Trust\ReflectionTest.cs" />
+    <Compile Include="Trust\TestTrustStrategy.cs" />
+    <Compile Include="Trust\TestTypes.cs" />
+    <Compile Include="Trust\TypeTrustReaderTest.cs" />
     <Compile Include="Trust\GenericTrustStrategyAttributeTest.cs" />
   </ItemGroup>
   <ItemGroup>

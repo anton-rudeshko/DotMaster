@@ -12,7 +12,7 @@ namespace DotMaster.Core.Trust
     {
         public IDictionary<PropertyInfo, IDictionary<string, ITrustStrategy>> TrustStrategies { get; set; }
 
-        public TrustReader TrustReader { get; set; }
+        public TypeTrustReader TypeTrustReader { get; set; }
 
         public ITrustStrategy DefaultTrustStrategy { get; set; }
 
@@ -20,7 +20,7 @@ namespace DotMaster.Core.Trust
         {
             DefaultTrustStrategy = defaultTrustStrategy ?? new FixedScoreTrustStrategy(0);
             TrustStrategies = new Dictionary<PropertyInfo, IDictionary<string, ITrustStrategy>>();
-            TrustReader = new TrustReader();
+            TypeTrustReader = new TypeTrustReader();
         }
 
         public void CalculateTrust<K, B, X>(B baseObject)
@@ -68,7 +68,7 @@ namespace DotMaster.Core.Trust
             where B : class, IBaseObject<K, B, X>
             where X : class, ICrossReference<K, B, X>
         {
-            Debug.Assert(!string.IsNullOrWhiteSpace(source), "Source should be not empty");
+            Debug.Assert(!string.IsNullOrWhiteSpace(source), "ForSource should be not empty");
 
             return TrustStrategies.ContainsKey(property) && TrustStrategies[property].ContainsKey(source)
                        ? TrustStrategies[property][source]
