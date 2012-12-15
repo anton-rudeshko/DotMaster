@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using DotMaster.Core.Utils;
 
 namespace DotMaster.Core.Trust
 {
@@ -27,18 +28,10 @@ namespace DotMaster.Core.Trust
                 throw new ArgumentNullException("type");
             }
 
-            var trustByProperties = new Dictionary<string, MemberTrust>();
             var properties = type.GetProperties().Where(NotIgnored);
-            foreach (var property in properties)
-            {
-                var trustContainer = ReadTrustRulesFrom(property);
-                if (trustContainer != null)
-                {
-                    trustByProperties.Add(property.Name, trustContainer);
-                }
-            }
-
-            return new TypeTrust(trustByProperties, ReadTrustRulesFrom(type));
+            var trustByProperties = properties.ToDictionaryIgnoringNullValue(p => p.Name, ReadTrustRulesFrom);
+            var classLevel = ReadTrustRulesFrom(type);
+            return new TypeTrust(trustByProperties, classLevel);
         }
 
         public MemberTrust ReadTrustRulesFrom(Type type)

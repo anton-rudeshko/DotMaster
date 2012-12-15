@@ -62,6 +62,7 @@
     <Compile Include="Trust\MemberTrustReader.cs" />
     <Compile Include="Trust\TrustProcessor.cs" />
     <Compile Include="Trust\TypeTrust.cs" />
+    <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\ReflectionUtils.cs" />
     <Compile Include="Trust\TypeTrustReader.cs" />
     <Compile Include="Trust\Attributes\GenericTrustStrategyAttribute.cs" />

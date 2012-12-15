@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using DotMaster.Core.Model;
+using DotMaster.Core.Utils;
 
 namespace DotMaster.Core.Trust
 {
@@ -42,7 +43,7 @@ namespace DotMaster.Core.Trust
 
         public AppTrust ReadTrustRulesFrom(IEnumerable<Type> types)
         {
-            return new AppTrust(types.ToDictionary(type => type, _typeTrustReader.ReadAllTrustRulesFrom));
+            return new AppTrust(types.ToDictionaryIgnoringNullValue(t => t, _typeTrustReader.ReadAllTrustRulesFrom));
         }
 
         public IEnumerable<Type> MasteredTypes(Assembly assembly)

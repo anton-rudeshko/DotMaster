@@ -23,10 +23,6 @@ namespace DotMaster.Core.Trust
             {
                 throw new ArgumentNullException("trustByProperties");
             }
-            if (classLevel == null)
-            {
-                throw new ArgumentNullException("classLevel");
-            }
 
             _trustByProperties = trustByProperties;
             _classLevel = classLevel;
@@ -34,12 +30,8 @@ namespace DotMaster.Core.Trust
 
         public ITrustStrategy GetTrustStrategyFor(string propertyName, string source)
         {
-            return GetTrustContainerFor(propertyName).GetTrustStrategyFor(source);
-        }
-
-        public MemberTrust GetTrustContainerFor(string propertyName)
-        {
-            return _trustByProperties.ContainsKey(propertyName) ? _trustByProperties[propertyName] : ClassLevel;
+            var memberTrust = _trustByProperties.ContainsKey(propertyName) ? _trustByProperties[propertyName] : ClassLevel;
+            return memberTrust == null ? null : memberTrust.GetTrustStrategyFor(source);
         }
     }
 }
