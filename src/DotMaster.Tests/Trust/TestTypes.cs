@@ -14,15 +14,12 @@ namespace DotMaster.Tests.Trust
             public int MyProperty { get; set; }
         }
 
-        public class D : TestTypes.A
+        public class D : A
         {
             public new int MyProperty { get; set; }
         }
 
-        public class E : TestTypes.D
-        {
-
-        }
+        public class E : D {}
 
         [FixedScore(10)]
         [FixedScore(30, ForSource = "AAA")]
@@ -31,18 +28,18 @@ namespace DotMaster.Tests.Trust
         {
             public int NoTrust { get; set; }
 
-            [GenericTrustStrategy(typeof(TestTrustStrategy), ForSource = "AAA")]
+            [GenericTrustStrategy(typeof (TestTrustStrategy), ForSource = "AAA")]
             public int MyProperty { get; set; }
 
             [FixedScore(10)]
             public int MyProperty1 { get; set; }
-            
+
             [LinearDecrease(From = 90, To = 10, Decay = 50)]
-            [GenericTrustStrategy(typeof(TestTrustStrategy), ForSource = "AAA")]
+            [GenericTrustStrategy(typeof (TestTrustStrategy), ForSource = "AAA")]
             public int MyProperty2 { get; set; }
-            
+
             [LinearDecrease(From = 90, To = 10, Decay = 50)]
-            [GenericTrustStrategy(typeof(TestTrustStrategy), ForSource = "BBB")]
+            [GenericTrustStrategy(typeof (TestTrustStrategy), ForSource = "BBB")]
             [FixedScore(5, ForSource = "CCC")]
             public int MyProperty3 { get; set; }
         }
