@@ -46,7 +46,7 @@ namespace DotMaster.Tests.ManyToMany
     {
         public BookXrefMap()
         {
-            Map(x => x.ObjectData.Title);
+            Component(x => x.ObjectData, m => m.Map(x => x.Title));
         }
     }
 
@@ -54,7 +54,7 @@ namespace DotMaster.Tests.ManyToMany
     {
         public AuthorXrefMap()
         {
-            Map(x => x.ObjectData.Name);
+            Component(x => x.ObjectData, m => m.Map(x => x.Name));
         }
     }
 }

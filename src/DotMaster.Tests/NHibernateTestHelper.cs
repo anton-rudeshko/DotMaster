@@ -1,4 +1,5 @@
-﻿using FluentNHibernate.Cfg;
+﻿using DotMaster.Tests.ManyToOne;
+using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Cfg;
@@ -14,6 +15,17 @@ namespace DotMaster.Tests
             return Fluently.Configure()
                            .Database(OracleClientConfiguration.Oracle10.ConnectionString(TestDataBase).ShowSql())
                            .Mappings(m => m.FluentMappings.AddFromAssemblyOf<T>())
+                           .CurrentSessionContext<ThreadLocalSessionContext>()
+                           .BuildConfiguration();
+        }
+
+        public static Configuration CreateStudentConfiguration()
+        {
+            return Fluently.Configure()
+                           .Database(OracleClientConfiguration.Oracle10.ConnectionString(TestDataBase).ShowSql())
+                           .Mappings(m => m.FluentMappings
+                                           .Add<StudentMap>().Add<StudentXrefMap>()
+                                           .Add<LectureMap>().Add<LectureXrefMap>())
                            .CurrentSessionContext<ThreadLocalSessionContext>()
                            .BuildConfiguration();
         }

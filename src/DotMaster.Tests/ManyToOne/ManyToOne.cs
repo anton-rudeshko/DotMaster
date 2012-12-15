@@ -25,7 +25,7 @@ namespace DotMaster.Tests.ManyToOne
     {
         public StudentXrefMap()
         {
-            Map(x => x.ObjectData.Name);
+            Component(x => x.ObjectData, m => m.Map(x => x.Name));
         }
     }
 
@@ -50,7 +50,7 @@ namespace DotMaster.Tests.ManyToOne
     {
         public LectureXrefMap()
         {
-            Map(x => x.ObjectData.Title);
+            Component(x => x.ObjectData, m => m.Map(x => x.Title));
         }
     }
 }
