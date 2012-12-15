@@ -1,4 +1,4 @@
-﻿namespace DotMaster.Core.Interfaces
+﻿namespace DotMaster.Core
 {
     /// <summary>
     /// Позволяет указывать контрольную таблицу, в которую будут 

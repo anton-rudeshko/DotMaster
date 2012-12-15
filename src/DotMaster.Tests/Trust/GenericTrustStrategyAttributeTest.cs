@@ -1,9 +1,10 @@
 ﻿using System;
-using DotMaster.Core.Interfaces;
+using DotMaster.Core.Model;
 using DotMaster.Core.Trust;
+using DotMaster.Core.Trust.Attributes;
 using NUnit.Framework;
 
-namespace DotMaster.Tests
+namespace DotMaster.Tests.Trust
 {
     public class GenericTrustStrategyAttributeTest
     {

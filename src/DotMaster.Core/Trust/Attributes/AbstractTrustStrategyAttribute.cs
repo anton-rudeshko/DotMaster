@@ -1,7 +1,6 @@
 ﻿using System;
-using DotMaster.Core.Interfaces;
 
-namespace DotMaster.Core.Trust
+namespace DotMaster.Core.Trust.Attributes
 {
     /// <summary>
     /// Базовый абстрактный класс для создания аттрибутов, описывающих доверительные стратегии.

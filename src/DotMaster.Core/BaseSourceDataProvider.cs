@@ -1,7 +1,7 @@
 ﻿using System;
-using DotMaster.Core.Interfaces;
+using DotMaster.Core.Model;
 
-namespace DotMaster.Core.Abstract
+namespace DotMaster.Core
 {
     public abstract class BaseSourceDataProvider<TKey, TBase, TXref> : ISourceDataProvider<TKey, TBase, TXref> 
             where TXref : class, ICrossReference<TKey, TBase, TXref>

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using DotMaster.Core.Interfaces;
+using DotMaster.Core.Model;
+using DotMaster.Core.Trust.Attributes;
 
 namespace DotMaster.Core.Trust
 {

@@ -1,6 +1,7 @@
 ﻿using System;
+using DotMaster.Core.Model;
 
-namespace DotMaster.Core.Interfaces
+namespace DotMaster.Core
 {
     public interface ISourceDataProvider<TKey, TBase, out TXref>
         where TXref : class, ICrossReference<TKey, TBase, TXref>

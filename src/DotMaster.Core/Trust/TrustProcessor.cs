@@ -2,7 +2,8 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using DotMaster.Core.Interfaces;
+using DotMaster.Core.Model;
+using DotMaster.Core.Trust.Strategies;
 using DotMaster.Core.Utils;
 
 namespace DotMaster.Core.Trust

@@ -1,6 +1,6 @@
 using System;
 
-namespace DotMaster.Core.Interfaces.Impl
+namespace DotMaster.Core.Model.Impl
 {
     public abstract class LongCrossReference<TBase, TXref> : ICrossReference<long, TBase, TXref>
         where TBase : LongBaseObject<TBase, TXref>

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DotMaster.Core.Interfaces.Impl
+namespace DotMaster.Core.Model.Impl
 {
     public abstract class StringBaseObject<TBase, TXref> : IBaseObject<string, TBase, TXref>
         where TBase : StringBaseObject<TBase, TXref>

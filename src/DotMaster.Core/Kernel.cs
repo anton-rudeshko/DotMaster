@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using DotMaster.Core.Interfaces;
+using DotMaster.Core.Model;
 using DotMaster.Core.Trust;
 
 namespace DotMaster.Core

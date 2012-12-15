@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DotMaster.Core.Interfaces
+namespace DotMaster.Core.Model
 {
     public interface ICrossReference<TKey, TBase, TXref> : IEntity<TKey>
         where TXref : class, ICrossReference<TKey, TBase, TXref>

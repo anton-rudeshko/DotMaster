@@ -1,6 +1,6 @@
-﻿using DotMaster.Core.Interfaces;
+﻿using DotMaster.Core.Trust.Strategies;
 
-namespace DotMaster.Core.Trust
+namespace DotMaster.Core.Trust.Attributes
 {
     /// <summary>
     /// Линейное уменьшение доверительного уровня со временем.

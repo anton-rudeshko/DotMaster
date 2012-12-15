@@ -1,4 +1,4 @@
-﻿namespace DotMaster.Core.Interfaces
+﻿namespace DotMaster.Core.Model
 {
     public interface IEntity<TKey>
     {

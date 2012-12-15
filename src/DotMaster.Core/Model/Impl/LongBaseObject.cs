@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DotMaster.Core.Interfaces.Impl
+namespace DotMaster.Core.Model.Impl
 {
     public abstract class LongBaseObject<TBase, TXref> : IBaseObject<long, TBase, TXref>
         where TBase : LongBaseObject<TBase, TXref>

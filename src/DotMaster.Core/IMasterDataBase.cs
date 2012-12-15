@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using DotMaster.Core.Model;
 
-namespace DotMaster.Core.Interfaces
+namespace DotMaster.Core
 {
     public interface IMasterDataBase
     {

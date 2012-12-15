@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Reflection;
-using DotMaster.Core.Interfaces;
 
-namespace DotMaster.Core.Trust
+namespace DotMaster.Core.Trust.Attributes
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true, AllowMultiple = true)]
     public class GenericTrustStrategyAttribute : AbstractTrustStrategyAttribute

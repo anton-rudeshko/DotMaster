@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DotMaster.Core.Interfaces
+namespace DotMaster.Core.Model
 {
     public interface IBaseObject<TKey, TBase, TXref> : IEntity<TKey>
         where TBase : class, IBaseObject<TKey, TBase, TXref>

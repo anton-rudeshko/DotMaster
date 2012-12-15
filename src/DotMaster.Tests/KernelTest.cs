@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using DotMaster.Core;
-using DotMaster.Core.Interfaces;
 using Moq;
 using NUnit.Framework;
 

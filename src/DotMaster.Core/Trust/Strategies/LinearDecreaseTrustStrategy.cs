@@ -1,6 +1,6 @@
-﻿using DotMaster.Core.Interfaces;
+﻿using DotMaster.Core.Model;
 
-namespace DotMaster.Core.Trust
+namespace DotMaster.Core.Trust.Strategies
 {
     public class LinearDecreaseTrustStrategy : ITrustStrategy
     {

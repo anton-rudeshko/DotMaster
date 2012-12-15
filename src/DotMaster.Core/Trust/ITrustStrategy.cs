@@ -1,4 +1,4 @@
-﻿using DotMaster.Core.Interfaces;
+﻿using DotMaster.Core.Model;
 
 namespace DotMaster.Core.Trust
 {

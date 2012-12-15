@@ -1,6 +1,4 @@
-﻿using DotMaster.Core.Abstract;
-
-namespace DotMaster.Core.Interfaces.Impl
+﻿namespace DotMaster.Core.Model.Impl
 {
     public abstract class StringSourceDataProvider<TBase, TXref> : BaseSourceDataProvider<string, TBase, TXref>
         where TXref : StringCrossReference<TBase, TXref>

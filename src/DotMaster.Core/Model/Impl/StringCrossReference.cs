@@ -1,6 +1,6 @@
 using System;
 
-namespace DotMaster.Core.Interfaces.Impl
+namespace DotMaster.Core.Model.Impl
 {
     public abstract class StringCrossReference<TBase, TXref> : ICrossReference<string, TBase, TXref>
         where TBase : StringBaseObject<TBase, TXref>

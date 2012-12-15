@@ -1,9 +1,11 @@
 ﻿using System;
-using DotMaster.Core.Interfaces;
+using DotMaster.Core.Model;
 using DotMaster.Core.Trust;
+using DotMaster.Core.Trust.Attributes;
+using DotMaster.Core.Trust.Strategies;
 using NUnit.Framework;
 
-namespace DotMaster.Tests.Processing
+namespace DotMaster.Tests.Trust
 {
     [TestFixture]
     public class TrustReaderTest
