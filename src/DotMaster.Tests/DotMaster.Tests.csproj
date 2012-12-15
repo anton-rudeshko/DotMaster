@@ -66,6 +66,7 @@
     <Compile Include="Trust\TestTypes.cs" />
     <Compile Include="Trust\TypeTrustReaderTest.cs" />
     <Compile Include="Trust\GenericTrustStrategyAttributeTest.cs" />
+    <Compile Include="Utils\ReflectionUtilsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
