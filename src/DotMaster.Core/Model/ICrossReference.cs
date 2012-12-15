@@ -7,11 +7,6 @@ namespace DotMaster.Core.Model
         where TBase : class, IBaseObject<TKey, TBase, TXref>
     {
         /// <summary>
-        /// На какой BO смотрит этот xref
-        /// </summary>
-        TKey BaseObjKey { get; set; }
-
-        /// <summary>
         /// Идентификатор источника
         /// </summary>
         string Source { get; set; }
@@ -27,7 +22,13 @@ namespace DotMaster.Core.Model
         TBase ObjectData { get; set; }
 
         /// <summary>
+        /// На какой BO смотрит этот xref
+        /// </summary>
+        TKey BaseObjKey { get; set; }
+
+        /// <summary>
         /// Ссылка на базовую сущность, в которой содержится данный xref
+        /// FK - <see cref="BaseObjKey"/>
         /// </summary>
         TBase BaseObject { get; set; }
 
