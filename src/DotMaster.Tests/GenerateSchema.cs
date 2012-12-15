@@ -6,7 +6,7 @@ namespace DotMaster.Tests
     public class GenerateSchema
     {
         [Test]
-        public void GenerateMusicSchema()
+        public void GenerateTestSchema()
         {
 //            NHibernateTestHelper.PrintSchema(NHibernateTestHelper.CreateTestConfiguration<TestBO>());
         }
