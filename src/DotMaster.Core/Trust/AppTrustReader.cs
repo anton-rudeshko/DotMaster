@@ -41,6 +41,11 @@ namespace DotMaster.Core.Trust
             return ReadTrustRulesFrom(assemblies.SelectMany(MasteredTypes));
         }
 
+        public AppTrust ReadTrustRulesFromAssemblyOf<T>()
+        {
+            return ReadTrustRulesFrom(MasteredTypes(typeof(T).Assembly));
+        }
+
         public AppTrust ReadTrustRulesFrom(IEnumerable<Type> types)
         {
             return new AppTrust(types.ToDictionaryIgnoringNullValue(t => t, _typeTrustReader.ReadAllTrustRulesFrom));
