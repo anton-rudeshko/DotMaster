@@ -18,7 +18,7 @@ namespace DotMaster.Tests
                            .BuildConfiguration();
         }
 
-        public static void TestDataBase(OracleConnectionStringBuilder builder)
+        private static void TestDataBase(OracleConnectionStringBuilder builder)
         {
             builder
                 .Server("localhost")
