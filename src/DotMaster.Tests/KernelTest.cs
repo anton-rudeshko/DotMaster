@@ -42,7 +42,7 @@ namespace DotMaster.Tests
             provider.Provide(testXref);
 
             // Verify
-            db.Verify(x => x.Save<long, TestBO, TestXref>(It.IsAny<TestBO>()));
+            db.Verify(x => x.Save<int, TestBO, TestXref>(It.IsAny<TestBO>()));
 
             // Assert
             Assert.That(savedBO, Is.Not.Null);
@@ -75,7 +75,7 @@ namespace DotMaster.Tests
                     SourceKey = testXref.SourceKey, ObjectData = new TestBO { MyProperty = "old" }
                 };
             presentBO.Xrefs = new List<TestXref> { presentXref };
-            db.Setup(x => x.QueryForXref<long, TestBO, TestXref>(testXref.SourceKey, provider.Source)).Returns(presentXref);
+            db.Setup(x => x.QueryForXref<int, TestBO, TestXref>(testXref.SourceKey, provider.Source)).Returns(presentXref);
             var newTime = now.AddDays(1);
             testXref.LastUpdate = newTime;
 
@@ -107,13 +107,13 @@ namespace DotMaster.Tests
 
         private void VerifySaved()
         {
-            db.Verify(x => x.Save<long, TestBO, TestXref>(It.IsAny<TestBO>()));
+            db.Verify(x => x.Save<int, TestBO, TestXref>(It.IsAny<TestBO>()));
         }
 
         private void PrepareSavedItems()
         {
             savedBO = null;
-            db.Setup(c => c.Save<long, TestBO, TestXref>(It.IsAny<TestBO>())).Callback<TestBO>(obj => savedBO = obj);
+            db.Setup(c => c.Save<int, TestBO, TestXref>(It.IsAny<TestBO>())).Callback<TestBO>(obj => savedBO = obj);
         }
     }
 }

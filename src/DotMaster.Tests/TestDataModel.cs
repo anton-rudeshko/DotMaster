@@ -3,20 +3,20 @@ using DotMaster.NHibernate.Mappings;
 
 namespace DotMaster.Tests
 {
-    public class TestBO : LongBaseObject<TestBO, TestXref>
+    public class TestBO : IntBaseObject<TestBO, TestXref>
     {
         public virtual string MyProperty { get; set; }
         public virtual string MyProperty2 { get; set; }
     }
 
-    public class TestXref : LongCrossReference<TestBO, TestXref> {}
+    public class TestXref : IntCrossReference<TestBO, TestXref> {}
 
-    public class TestProvider : LongSourceDataProvider<TestBO, TestXref>
+    public class TestProvider : IntSourceDataProvider<TestBO, TestXref>
     {
         public TestProvider() : base("TestSource") {}
     }
 
-    public class TestBOMap : LongBaseObjectMap<TestBO, TestXref>
+    public class TestBOMap : IntBaseObjectMap<TestBO, TestXref>
     {
         public TestBOMap()
         {
@@ -25,12 +25,15 @@ namespace DotMaster.Tests
         }
     }
 
-    public class TestXrefMap : LongXrefMap<TestBO, TestXref>
+    public class TestXrefMap : IntXrefMap<TestBO, TestXref>
     {
         public TestXrefMap()
         {
-            Component(x => x.ObjectData, m => m.Map(x => x.MyProperty));
-            Component(x => x.ObjectData, m => m.Map(x => x.MyProperty2));
+            Component(x => x.ObjectData, m =>
+                {
+                    m.Map(x => x.MyProperty);
+                    m.Map(x => x.MyProperty2);
+                });
         }
     }
 }
