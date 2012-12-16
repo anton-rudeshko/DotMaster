@@ -14,7 +14,7 @@ namespace DotMaster.NHibernate.Mappings
 
             Map(x => x.LastUpdate).Not.Nullable();
 
-            HasMany(x => x.Xrefs).KeyColumn(ReflectionUtils.NameOf((TXref x) => x.BaseObjKey));
+            HasMany(x => x.Xrefs).KeyColumn(ReflectionUtils.NameOf((TXref x) => x.BaseObjKey)).Cascade.All();
         }
     }
 }
