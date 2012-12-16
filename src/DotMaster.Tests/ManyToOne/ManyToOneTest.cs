@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using DotMaster.Core;
+using DotMaster.Core.Trust;
 using DotMaster.NHibernate;
 using NHibernate;
 using NHibernate.Linq;
@@ -27,11 +28,13 @@ namespace DotMaster.Tests.ManyToOne
             sessionFactory = testConfiguration.BuildSessionFactory();
             var masterDB = new NHibernateMasterDB(sessionFactory);
 
-            kernel = new Kernel(masterDB);
+            var trust = new AppTrustReader().ReadTrustRulesFrom(typeof(TestBO));
+            var trustProcessor = new TrustProcessor(trust);
+            kernel = new Kernel(masterDB, trustProcessor);
         }
 
         [Test]
-        public void SimpleSave()
+        public void SingleXref()
         {
             // Arrange
             var lastUpdate = DateTime.Now;
@@ -55,7 +58,7 @@ namespace DotMaster.Tests.ManyToOne
         }
 
         [Test]
-        public void SecondSave()
+        public void TwoXrefs()
         {
             // Arrange
             var sourceKey = "123123";
@@ -83,21 +86,59 @@ namespace DotMaster.Tests.ManyToOne
             Assert.That(students[0].LastUpdate, Is.EqualTo(secondUpdate));
         }
 
+        [Test]
+        public void TwoSourceXrefs()
+        {
+            // Arrange
+            var firstXref = MaiStudent("123123", "Hello MDM", DateTime.Now);
+            var secondXref = MsuStudent("15623", "Updated 'Hello MDM'", DateTime.Now.AddDays(3));
+
+            Process(firstXref);
+
+            // Act
+            Process(secondXref);
+
+            // Assert
+            var students = GetAllStudents();
+            var xrefs = GetAllXrefs();
+
+            Assert.That(students, Is.Not.Null);
+            Assert.That(students.Count, Is.EqualTo(2));
+
+            Assert.That(xrefs, Is.Not.Null);
+            Assert.That(xrefs.Count, Is.EqualTo(2));
+        }
+
         private void Process(StudentXref xref)
         {
             kernel.Process<int, Student, StudentXref>(xref);
         }
 
-        private List<Student> GetAllStudents()
+        private IList<Student> GetAllStudents()
         {
             return sessionFactory.GetCurrentSession().Query<Student>().ToList();
         }
 
+        private IList<StudentXref> GetAllXrefs()
+        {
+            return sessionFactory.GetCurrentSession().Query<StudentXref>().ToList();
+        }
+
         private static StudentXref MaiStudent(string sourceKey, string name, DateTime lastUpdate)
+        {
+            return CreateStudent("MAI", sourceKey, name, lastUpdate);
+        }
+
+        private static StudentXref MsuStudent(string sourceKey, string name, DateTime lastUpdate)
+        {
+            return CreateStudent("MSU", sourceKey, name, lastUpdate);
+        }
+
+        private static StudentXref CreateStudent(string source, string sourceKey, string name, DateTime lastUpdate)
         {
             return new StudentXref
                 {
-                    Source = "MAI",
+                    Source = source,
                     SourceKey = sourceKey,
                     ObjectData = new Student { Name = name },
                     LastUpdate = lastUpdate

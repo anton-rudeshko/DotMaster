@@ -6,14 +6,16 @@ using DotMaster.Core.Trust;
 
 namespace DotMaster.Core
 {
+    /// <summary>
+    /// Вычислительное ядро модуля DotMaster.
+    /// Предоставляет интерфейс для обработки основных данных.
+    /// </summary>
     public class Kernel
     {
         private readonly TrustProcessor _trustProcessor;
         public IMasterDataBase MasterDB { get; set; }
 
-        public Kernel(IMasterDataBase masterDB = null) : this(masterDB, new TrustProcessor())
-        {
-        }
+        public Kernel(IMasterDataBase masterDB = null) : this(masterDB, new TrustProcessor()) {}
 
         public Kernel(IMasterDataBase masterDB, TrustProcessor trustProcessor)
         {
@@ -21,10 +23,18 @@ namespace DotMaster.Core
             {
                 throw new ArgumentNullException("trustProcessor");
             }
+
             MasterDB = masterDB;
             _trustProcessor = trustProcessor;
         }
 
+        /// <summary>
+        /// Зарегистрировать нового поставщика данных и подписаться на него обновления
+        /// </summary>
+        /// <typeparam name="TKey">Тип ключа</typeparam>
+        /// <typeparam name="TBase">Тип базового объекта</typeparam>
+        /// <typeparam name="TXref">Тип перекрёстной ссылки</typeparam>
+        /// <param name="dataProvider">Поставщик данных</param>
         public void RegisterDataProvider<TKey, TBase, TXref>(ISourceDataProvider<TKey, TBase, TXref> dataProvider)
             where TBase : class, IBaseObject<TKey, TBase, TXref>, new() 
             where TXref : class, ICrossReference<TKey, TBase, TXref>
@@ -33,9 +43,19 @@ namespace DotMaster.Core
             {
                 throw new ArgumentNullException("dataProvider");
             }
+
             dataProvider.OnData += Process<TKey, TBase, TXref>;
         }
 
+        /// <summary>
+        /// Обработать новое обновление в виде перекрёстной ссылки.
+        /// Перекрёстная ссылка будет добавлена в базовый объект, поля которого
+        /// будут обновлены в соответствии с переданной перекрёстной ссылкой.
+        /// </summary>
+        /// <typeparam name="TKey">Тип ключа</typeparam>
+        /// <typeparam name="TBase">Тип базового объекта</typeparam>
+        /// <typeparam name="TXref">Тип перекрёстной ссылки</typeparam>
+        /// <param name="xref">Перекрёстная ссылка, содержащая обновления</param>
         public void Process<TKey, TBase, TXref>(TXref xref)
             where TBase : class, IBaseObject<TKey, TBase, TXref>, new()
             where TXref : class, ICrossReference<TKey, TBase, TXref>
@@ -53,11 +73,11 @@ namespace DotMaster.Core
                 throw new ArgumentException(I18n.XrefSourceKeyIsEmpty, "xref");
             }
 
-            // Update present xref if any
             var presentXref = MasterDB.QueryForXref<TKey, TBase, TXref>(xref.SourceKey, xref.Source);
             TBase baseObject;
             if (presentXref != null)
             {
+                // Обновить уже существующую перекрёстную ссылку из данного источника
                 Debug.WriteLine("Found present xref " + presentXref.BaseObjKey);
                 presentXref.ObjectData = xref.ObjectData;
                 presentXref.LastUpdate = xref.LastUpdate;
@@ -65,14 +85,33 @@ namespace DotMaster.Core
             }
             else
             {
+                // Создать нвоый базовый объект на основе пришедшего обновления
                 Debug.WriteLine("No present xref found, creating new base object");
                 baseObject = new TBase { Xrefs = new List<TXref> { xref } };
                 xref.BaseObject = baseObject;
             }
 
-            _trustProcessor.CalculateTrust<TKey, TBase, TXref>(baseObject);
+            RecalculateTrust<TKey, TBase, TXref>(baseObject);
+        }
 
-            MasterDB.Save<TKey, TBase, TXref>(baseObject);
+        /// <summary>
+        /// Пересчитать доверительные правила для данного базового объекта и обновить его в базе данных
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TBase"></typeparam>
+        /// <typeparam name="TXref"></typeparam>
+        /// <param name="baseObject"></param>
+        public void RecalculateTrust<TKey, TBase, TXref>(TBase baseObject)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
+        {
+            if (baseObject == null)
+            {
+                throw new ArgumentNullException("baseObject");
+            }
+
+            _trustProcessor.CalculateTrust<TKey, TBase, TXref>(baseObject);
+            MasterDB.Update<TKey, TBase, TXref>(baseObject);
         }
     }
 }

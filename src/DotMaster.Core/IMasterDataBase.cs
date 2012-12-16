@@ -22,5 +22,9 @@ namespace DotMaster.Core
         void Save<TKey, TBase, TXref>(TBase baseObject)
             where TBase : class, IBaseObject<TKey, TBase, TXref>
             where TXref : class, ICrossReference<TKey, TBase, TXref>;
+
+        void Update<TKey, TBase, TXref>(TBase baseObject)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>;
     }
 }

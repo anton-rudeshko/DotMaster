@@ -36,12 +36,28 @@ namespace DotMaster.NHibernate
             {
                 throw new ArgumentNullException("baseObject");
             }
+
             using (var tx = CurrentSession.BeginTransaction())
             {
                 CurrentSession.SaveOrUpdate(baseObject);
                 tx.Commit();
             }
-            
+        }
+
+        public void Update<TKey, TBase, TXref>(TBase baseObject) 
+            where TBase : class, IBaseObject<TKey, TBase, TXref> 
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
+        {
+            if (baseObject == null)
+            {
+                throw new ArgumentNullException("baseObject");
+            }
+
+            using (var tx = CurrentSession.BeginTransaction())
+            {
+                CurrentSession.Update(baseObject);
+                tx.Commit();
+            }
         }
     }
 }
