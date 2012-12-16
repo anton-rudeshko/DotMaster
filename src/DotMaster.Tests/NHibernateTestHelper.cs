@@ -1,4 +1,5 @@
-﻿using DotMaster.Tests.ManyToOne;
+﻿using System;
+using DotMaster.Tests.ManyToOne;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
@@ -10,24 +11,23 @@ namespace DotMaster.Tests
 {
     public static class NHibernateTestHelper
     {
-        public static Configuration CreateTestConfiguration<T>()
+        public static Configuration CreateTestConfiguration(Action<MappingConfiguration> mappings)
         {
             return Fluently.Configure()
                            .Database(OracleClientConfiguration.Oracle10.ConnectionString(TestDataBase).ShowSql())
-                           .Mappings(m => m.FluentMappings.AddFromAssemblyOf<T>())
+                           .Mappings(mappings)
                            .CurrentSessionContext<ThreadLocalSessionContext>()
                            .BuildConfiguration();
         }
 
         public static Configuration CreateStudentConfiguration()
         {
-            return Fluently.Configure()
-                           .Database(OracleClientConfiguration.Oracle10.ConnectionString(TestDataBase).ShowSql())
-                           .Mappings(m => m.FluentMappings
-                                           .Add<StudentMap>().Add<StudentXrefMap>()
-                                           .Add<LectureMap>().Add<LectureXrefMap>())
-                           .CurrentSessionContext<ThreadLocalSessionContext>()
-                           .BuildConfiguration();
+            return CreateTestConfiguration(StudentMappings);
+        }
+
+        private static void StudentMappings(MappingConfiguration m)
+        {
+            m.FluentMappings.Add<StudentMap>().Add<StudentXrefMap>().Add<LectureMap>().Add<LectureXrefMap>();
         }
 
         private static void TestDataBase(OracleConnectionStringBuilder builder)

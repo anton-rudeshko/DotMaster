@@ -30,12 +30,12 @@ namespace DotMaster.Tests.ManyToOne
         public void SimpleSave()
         {
             // Arrange
+            var lastUpdate = DateTime.Now;
             var xref = new StudentXref
                 {
-                    Source = "Somewhere",
-                    SourceKey = "123123",
+                    Source = "MAI", SourceKey = "123123",
                     ObjectData = new Student { Name = "Hello MDM" },
-                    LastUpdate = DateTime.Now
+                    LastUpdate = lastUpdate
                 };
 
             // Act
@@ -47,6 +47,7 @@ namespace DotMaster.Tests.ManyToOne
             Assert.That(students, Is.Not.Null);
             Assert.That(students.Count, Is.EqualTo(1));
             Assert.That(students[0].Name, Is.EqualTo("Hello MDM"));
+            Assert.That(students[0].LastUpdate, Is.EqualTo(lastUpdate));
         }
     }
 }

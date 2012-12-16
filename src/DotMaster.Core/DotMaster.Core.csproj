@@ -45,6 +45,8 @@
     <Compile Include="IControlTable.cs" />
     <Compile Include="Model\ICrossReference.cs" />
     <Compile Include="Model\IEntity.cs" />
+    <Compile Include="Model\Impl\AbstractBaseObject.cs" />
+    <Compile Include="Model\Impl\AbstractCrossReference.cs" />
     <Compile Include="Model\Impl\IntBaseObject.cs" />
     <Compile Include="Model\Impl\IntCrossReference.cs" />
     <Compile Include="Model\Impl\IntSourceDataProvider.cs" />

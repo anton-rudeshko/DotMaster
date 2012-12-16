@@ -1,20 +1,6 @@
-using System;
-
 namespace DotMaster.Core.Model.Impl
 {
-    public abstract class LongCrossReference<TBase, TXref> : ICrossReference<long, TBase, TXref>
+    public abstract class LongCrossReference<TBase, TXref> : AbstractCrossReference<long, TBase, TXref>
         where TBase : LongBaseObject<TBase, TXref>
-        where TXref : LongCrossReference<TBase, TXref>
-    {
-        public virtual long ObjKey { get; set; }
-        public virtual long BaseObjKey { get; set; }
-
-        public virtual string Source { get; set; }
-        public virtual string SourceKey { get; set; }
-
-        public virtual TBase ObjectData { get; set; }
-        public virtual TBase BaseObject { get; set; }
-
-        public virtual DateTime LastUpdate { get; set; }
-    }
+        where TXref : LongCrossReference<TBase, TXref> {}
 }

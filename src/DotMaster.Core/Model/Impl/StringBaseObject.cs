@@ -1,16 +1,6 @@
-using System;
-using System.Collections.Generic;
-
 namespace DotMaster.Core.Model.Impl
 {
-    public abstract class StringBaseObject<TBase, TXref> : IBaseObject<string, TBase, TXref>
+    public abstract class StringBaseObject<TBase, TXref> : AbstractBaseObject<string, TBase, TXref>
         where TBase : StringBaseObject<TBase, TXref>
-        where TXref : StringCrossReference<TBase, TXref>
-    {
-        public virtual string ObjKey { get; set; }
-
-        public virtual IList<TXref> Xrefs { get; set; }
-
-        public virtual DateTime LastUpdate { get; set; }
-    }
+        where TXref : StringCrossReference<TBase, TXref> {}
 }
