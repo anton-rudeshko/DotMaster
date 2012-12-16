@@ -4,8 +4,6 @@
         where TXref : LongCrossReference<TBase, TXref>
         where TBase : LongBaseObject<TBase, TXref>
     {
-        protected LongSourceDataProvider(string source) : base(source)
-        {
-        }
+        protected LongSourceDataProvider(string source) : base(source) {}
     }
 }

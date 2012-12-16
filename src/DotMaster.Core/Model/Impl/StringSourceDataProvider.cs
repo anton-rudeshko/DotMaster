@@ -4,8 +4,6 @@
         where TXref : StringCrossReference<TBase, TXref>
         where TBase : StringBaseObject<TBase, TXref>
     {
-        protected StringSourceDataProvider(string source) : base(source)
-        {
-        }
+        protected StringSourceDataProvider(string source) : base(source) {}
     }
 }
