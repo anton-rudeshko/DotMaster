@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using DotMaster.Core;
 using DotMaster.Core.Model;
@@ -31,7 +32,16 @@ namespace DotMaster.NHibernate
             where TBase : class, IBaseObject<TKey, TBase, TXref> 
             where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
-            CurrentSession.Save(baseObject);
+            if (baseObject == null)
+            {
+                throw new ArgumentNullException("baseObject");
+            }
+            using (var tx = CurrentSession.BeginTransaction())
+            {
+                CurrentSession.SaveOrUpdate(baseObject);
+                tx.Commit();
+            }
+            
         }
     }
 }

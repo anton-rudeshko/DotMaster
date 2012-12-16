@@ -67,6 +67,7 @@ namespace DotMaster.Core
             {
                 Debug.WriteLine("No present xref found, creating new base object");
                 baseObject = new TBase { Xrefs = new List<TXref> { xref } };
+                xref.BaseObject = baseObject;
             }
 
             _trustProcessor.CalculateTrust<TKey, TBase, TXref>(baseObject);

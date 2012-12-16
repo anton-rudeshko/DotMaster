@@ -10,13 +10,15 @@ namespace DotMaster.NHibernate.Mappings
     {
         public XrefMap()
         {
+            var baseObjKey = ReflectionUtils.NameOf((TXref x) => x.BaseObjKey);
             Id(x => x.ObjKey).Not.Nullable();
 
             Map(x => x.LastUpdate).Not.Nullable();
             Map(x => x.Source).Not.Nullable();
             Map(x => x.SourceKey).Not.Nullable();
+            Map(x => x.BaseObjKey).Not.Nullable().Formula(baseObjKey);
 
-            References(x => x.BaseObject).Column(ReflectionUtils.NameOf((TXref x) => x.BaseObjKey)).Not.Nullable();
+            References(x => x.BaseObject, baseObjKey).Not.Nullable();
         }
     }
 }
