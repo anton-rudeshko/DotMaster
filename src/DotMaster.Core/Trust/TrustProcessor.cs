@@ -12,42 +12,23 @@ namespace DotMaster.Core.Trust
     {
         public AppTrust AppTrust { get; set; }
 
-        public AppTrustReader AppTrustReader { get; set; }
-
         public ITrustStrategy DefaultTrustStrategy { get; set; }
 
-        public TrustProcessor() 
-            : this(new FixedScoreTrustStrategy(0))
-        {
-        }
+        public TrustProcessor()
+            : this(new AppTrustReader()) {}
 
-        public TrustProcessor(ITrustStrategy defaultTrustStrategy)
-            : this(defaultTrustStrategy, new AppTrustReader())
-        {
-        }
+        public TrustProcessor(AppTrustReader appTrustReader)
+            : this(appTrustReader.ReadTrustRulesFromCurrentDomain()) {}
 
-        public TrustProcessor(ITrustStrategy defaultTrustStrategy, AppTrustReader appTrustReader)
-            : this(defaultTrustStrategy, appTrustReader, appTrustReader.ReadTrustRulesFromCurrentDomain())
+        public TrustProcessor(AppTrust appTrust)
         {
-        }
-
-        public TrustProcessor(ITrustStrategy defaultTrustStrategy, AppTrustReader appTrustReader, AppTrust appTrust)
-        {
-            if (defaultTrustStrategy == null)
-            {
-                throw new ArgumentNullException("defaultTrustStrategy");
-            }
-            if (appTrustReader == null)
-            {
-                throw new ArgumentNullException("appTrustReader");
-            }
             if (appTrust == null)
             {
                 throw new ArgumentNullException("appTrust");
             }
+
             AppTrust = appTrust;
-            AppTrustReader = appTrustReader;
-            DefaultTrustStrategy = defaultTrustStrategy;
+            DefaultTrustStrategy = new FixedScoreTrustStrategy(0);
         }
 
         public void CalculateTrust<K, B, X>(B baseObject)

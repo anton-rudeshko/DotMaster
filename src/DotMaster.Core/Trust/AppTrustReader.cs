@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -44,6 +45,11 @@ namespace DotMaster.Core.Trust
         public AppTrust ReadTrustRulesFromAssemblyOf<T>()
         {
             return ReadTrustRulesFrom(MasteredTypes(typeof(T).Assembly));
+        }
+
+        public AppTrust ReadTrustRulesFrom(params Type[] types)
+        {
+            return ReadTrustRulesFrom(types as IEnumerable<Type>);
         }
 
         public AppTrust ReadTrustRulesFrom(IEnumerable<Type> types)
