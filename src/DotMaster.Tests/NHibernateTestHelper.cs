@@ -11,6 +11,16 @@ namespace DotMaster.Tests
 {
     public static class NHibernateTestHelper
     {
+        public static Configuration CreateTestConfiguration()
+        {
+            return CreateTestConfiguration(TestMappings);
+        }
+
+        public static Configuration CreateStudentConfiguration()
+        {
+            return CreateTestConfiguration(StudentMappings);
+        }
+
         public static Configuration CreateTestConfiguration(Action<MappingConfiguration> mappings)
         {
             return Fluently.Configure()
@@ -20,14 +30,14 @@ namespace DotMaster.Tests
                            .BuildConfiguration();
         }
 
-        public static Configuration CreateStudentConfiguration()
-        {
-            return CreateTestConfiguration(StudentMappings);
-        }
-
         private static void StudentMappings(MappingConfiguration m)
         {
             m.FluentMappings.Add<StudentMap>().Add<StudentXrefMap>().Add<LectureMap>().Add<LectureXrefMap>();
+        }
+
+        private static void TestMappings(MappingConfiguration m)
+        {
+            m.FluentMappings.Add<TestBOMap>().Add<TestXrefMap>();
         }
 
         private static void TestDataBase(OracleConnectionStringBuilder builder)
