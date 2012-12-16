@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace DotMaster.Tests.ManyToOne
 {
-    [TestFixture]
+    [TestFixture, Category("Long")]
     public class ManyToOneTest
     {
         private Kernel kernel;

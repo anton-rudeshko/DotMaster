@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace DotMaster.Tests
 {
-    [TestFixture]
+    [TestFixture, Category("Long")]
     public class KernelTest
     {
 
