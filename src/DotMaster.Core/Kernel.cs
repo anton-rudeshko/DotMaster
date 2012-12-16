@@ -97,10 +97,10 @@ namespace DotMaster.Core
         /// <summary>
         /// Пересчитать доверительные правила для данного базового объекта и обновить его в базе данных
         /// </summary>
-        /// <typeparam name="TKey"></typeparam>
-        /// <typeparam name="TBase"></typeparam>
-        /// <typeparam name="TXref"></typeparam>
-        /// <param name="baseObject"></param>
+        /// <typeparam name="TKey">Тип ключа</typeparam>
+        /// <typeparam name="TBase">Тип базового объекта</typeparam>
+        /// <typeparam name="TXref">Тип перекрёстной ссылки</typeparam>
+        /// <param name="baseObject">Базовый объект</param>
         public void RecalculateTrust<TKey, TBase, TXref>(TBase baseObject)
             where TBase : class, IBaseObject<TKey, TBase, TXref>
             where TXref : class, ICrossReference<TKey, TBase, TXref>
