@@ -4,15 +4,15 @@ using DotMaster.NHibernate.Mappings;
 
 namespace DotMaster.Tests.ManyToOne
 {
-    public class Student : LongBaseObject<Student, StudentXref>
+    public class Student : IntBaseObject<Student, StudentXref>
     {
         public virtual string Name { get; set; }
         public virtual IList<Lecture> Lectures { get; set; }
     }
 
-    public class StudentXref : LongCrossReference<Student, StudentXref> {}
+    public class StudentXref : IntCrossReference<Student, StudentXref> {}
 
-    public class StudentMap : LongBaseObjectMap<Student, StudentXref>
+    public class StudentMap : IntBaseObjectMap<Student, StudentXref>
     {
         public StudentMap()
         {
@@ -21,7 +21,7 @@ namespace DotMaster.Tests.ManyToOne
         }
     }
 
-    public class StudentXrefMap : LongXrefMap<Student, StudentXref>
+    public class StudentXrefMap : IntXrefMap<Student, StudentXref>
     {
         public StudentXrefMap()
         {
@@ -29,15 +29,15 @@ namespace DotMaster.Tests.ManyToOne
         }
     }
 
-    public class Lecture : LongBaseObject<Lecture, LectureXref>
+    public class Lecture : IntBaseObject<Lecture, LectureXref>
     {
         public virtual string Title { get; set; }
         public virtual Student Student { get; set; }
     }
 
-    public class LectureXref : LongCrossReference<Lecture, LectureXref> {}
+    public class LectureXref : IntCrossReference<Lecture, LectureXref> {}
 
-    public class LectureMap : LongBaseObjectMap<Lecture, LectureXref>
+    public class LectureMap : IntBaseObjectMap<Lecture, LectureXref>
     {
         public LectureMap()
         {
@@ -46,7 +46,7 @@ namespace DotMaster.Tests.ManyToOne
         }
     }
 
-    public class LectureXrefMap : LongXrefMap<Lecture, LectureXref>
+    public class LectureXrefMap : IntXrefMap<Lecture, LectureXref>
     {
         public LectureXrefMap()
         {

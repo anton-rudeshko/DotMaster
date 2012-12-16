@@ -19,7 +19,7 @@ namespace DotMaster.Core
         /// <typeparam name="TXref">Тип перекрёстной ссылки</typeparam>
         /// <param name="baseObject">Базовый объект для сохранения</param>
         /// <returns>Сохранённый базовый объект</returns>
-        TBase Save<TKey, TBase, TXref>(TBase baseObject)
+        void Save<TKey, TBase, TXref>(TBase baseObject)
             where TBase : class, IBaseObject<TKey, TBase, TXref>
             where TXref : class, ICrossReference<TKey, TBase, TXref>;
     }

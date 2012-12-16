@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DotMaster.Core;
 using DotMaster.NHibernate;
 using NHibernate;
@@ -33,11 +34,12 @@ namespace DotMaster.Tests.ManyToOne
                 {
                     Source = "Somewhere",
                     SourceKey = "123123",
-                    ObjectData = new Student { Name = "Hello MDM" }
+                    ObjectData = new Student { Name = "Hello MDM" },
+                    LastUpdate = DateTime.Now
                 };
 
             // Act
-            kernel.Process<long, Student, StudentXref>(xref);
+            kernel.Process<int, Student, StudentXref>(xref);
 
             // Assert
             var students = sessionFactory.GetCurrentSession().Query<Student>().ToList();
