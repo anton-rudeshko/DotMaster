@@ -41,6 +41,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>I18n.resx</DependentUpon>
     </Compile>
+    <Compile Include="Match\Matcher.cs" />
+    <Compile Include="Merge\Merger.cs" />
     <Compile Include="Model\IBaseObject.cs" />
     <Compile Include="IControlTable.cs" />
     <Compile Include="Model\ICrossReference.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="Model\Impl\StringCrossReference.cs" />
     <Compile Include="Model\Impl\StringSourceDataProvider.cs" />
     <Compile Include="ISourceDataProvider.cs" />
+    <Compile Include="Model\MasterStatus.cs" />
     <Compile Include="Trust\AppTrust.cs" />
     <Compile Include="Trust\AppTrustReader.cs" />
     <Compile Include="Trust\ITrustStrategy.cs" />

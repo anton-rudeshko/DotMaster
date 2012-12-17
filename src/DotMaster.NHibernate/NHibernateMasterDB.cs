@@ -1,9 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using DotMaster.Core;
 using DotMaster.Core.Model;
 using NHibernate;
 using NHibernate.Linq;
+
+namespace DotMaster.Core.Model
+{
+}
 
 namespace DotMaster.NHibernate
 {
@@ -132,6 +137,13 @@ namespace DotMaster.NHibernate
             }
 
             return xref.BaseObject;
+        }
+
+        public IEnumerable<TBase> BaseObjectsForMatch<TKey, TBase, TXref>()
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
+        {
+            return CurrentSession.Query<TBase>().Where(x => x.MasterStatus == MasterStatus.ReadyForMatch);
         }
     }
 }

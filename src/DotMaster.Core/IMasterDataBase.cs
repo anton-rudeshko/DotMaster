@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using DotMaster.Core.Model;
 
 namespace DotMaster.Core
@@ -48,6 +50,10 @@ namespace DotMaster.Core
         /// <exception cref="InvalidOperationException">Если по данной перекрёстной
         /// ссылке ничего не найдено, это нарушение целостности данных</exception>
         TBase QueryForBaseObject<TKey, TBase, TXref>(TXref xref)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>;
+
+        IEnumerable<TBase> BaseObjectsForMatch<TKey, TBase, TXref>()
             where TBase : class, IBaseObject<TKey, TBase, TXref>
             where TXref : class, ICrossReference<TKey, TBase, TXref>;
     }
