@@ -102,11 +102,7 @@ namespace DotMaster.Core
             Debug.WriteLine("Found present xref " + presentXref.BaseObjKey);
             presentXref.ObjectData = xref.ObjectData;
             presentXref.LastUpdate = xref.LastUpdate;
-            if (presentXref.BaseObject == null)
-            {
-                return MasterDB.QueryForBaseObject<TKey, TBase, TXref>(xref);
-            }
-            return presentXref.BaseObject;
+            return presentXref.BaseObject ?? MasterDB.QueryForBaseObject<TKey, TBase, TXref>(presentXref);
         }
 
         /// <summary>
@@ -130,13 +126,6 @@ namespace DotMaster.Core
 
             _trustProcessor.CalculateTrust<TKey, TBase, TXref>(baseObject);
             MasterDB.Save<TKey, TBase, TXref>(baseObject);
-        }
-
-        public void StartMatchAndMerge<TKey, TBase, TXref>()
-            where TBase : class, IBaseObject<TKey, TBase, TXref>
-            where TXref : class, ICrossReference<TKey, TBase, TXref>
-        {
-            
         }
 
         private void OnBeforeRecalculateTrust<TKey, TBase, TXref>(TBase baseObject)
