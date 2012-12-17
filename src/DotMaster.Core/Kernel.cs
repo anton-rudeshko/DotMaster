@@ -73,25 +73,40 @@ namespace DotMaster.Core
                 throw new ArgumentException(I18n.XrefSourceKeyIsEmpty, "xref");
             }
 
-            var presentXref = MasterDB.QueryForXref<TKey, TBase, TXref>(xref.SourceKey, xref.Source);
-            TBase baseObject;
-            if (presentXref != null)
-            {
-                // Обновить уже существующую перекрёстную ссылку из данного источника
-                Debug.WriteLine("Found present xref " + presentXref.BaseObjKey);
-                presentXref.ObjectData = xref.ObjectData;
-                presentXref.LastUpdate = xref.LastUpdate;
-                baseObject = presentXref.BaseObject;
-            }
-            else
-            {
-                // Создать нвоый базовый объект на основе пришедшего обновления
-                Debug.WriteLine("No present xref found, creating new base object");
-                baseObject = new TBase { Xrefs = new List<TXref> { xref } };
-                xref.BaseObject = baseObject;
-            }
+            OnBeforeProcess<TKey, TBase, TXref>(xref);
+
+            var baseObject = PerformLoad<TKey, TBase, TXref>(xref);
+
+            OnBeforeRecalculateTrust<TKey, TBase, TXref>(baseObject);
 
             RecalculateTrust<TKey, TBase, TXref>(baseObject);
+
+            OnAfterProcess<TKey, TBase, TXref>(baseObject);
+        }
+
+        private TBase PerformLoad<TKey, TBase, TXref>(TXref xref)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>, new()
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
+        {
+            var presentXref = MasterDB.QueryForXref<TKey, TBase, TXref>(xref.SourceKey, xref.Source);
+            if (presentXref == null)
+            {
+                Debug.WriteLine("No present xref found, creating new base object");
+                var baseObject = new TBase { Xrefs = new List<TXref> { xref } };
+                xref.BaseObject = baseObject;
+                return baseObject;
+            }
+
+            // Создать новый базовый объект на основе пришедшего обновления
+            // Обновить уже существующую перекрёстную ссылку из данного источника
+            Debug.WriteLine("Found present xref " + presentXref.BaseObjKey);
+            presentXref.ObjectData = xref.ObjectData;
+            presentXref.LastUpdate = xref.LastUpdate;
+            if (presentXref.BaseObject == null)
+            {
+                return MasterDB.QueryForBaseObject<TKey, TBase, TXref>(xref);
+            }
+            return presentXref.BaseObject;
         }
 
         /// <summary>
@@ -110,8 +125,30 @@ namespace DotMaster.Core
                 throw new ArgumentNullException("baseObject");
             }
 
+            Debug.Assert(baseObject.Xrefs != null);
+            Debug.Assert(baseObject.Xrefs.Count != 0);
+
             _trustProcessor.CalculateTrust<TKey, TBase, TXref>(baseObject);
-            MasterDB.Update<TKey, TBase, TXref>(baseObject);
+            MasterDB.Save<TKey, TBase, TXref>(baseObject);
         }
+
+        public void StartMatchAndMerge<TKey, TBase, TXref>()
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
+        {
+            
+        }
+
+        private void OnBeforeRecalculateTrust<TKey, TBase, TXref>(TBase baseObject)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref> {}
+
+        private void OnBeforeProcess<TKey, TBase, TXref>(TXref xref)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref> {}
+
+        private void OnAfterProcess<TKey, TBase, TXref>(TBase baseObject)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref> {}
     }
 }
