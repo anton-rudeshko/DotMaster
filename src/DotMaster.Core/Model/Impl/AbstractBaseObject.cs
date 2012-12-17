@@ -11,6 +11,8 @@ namespace DotMaster.Core.Model.Impl
 
         public virtual IList<TXref> Xrefs { get; set; }
 
+        public virtual MasterStatus MasterStatus { get; set; }
+
         public virtual DateTime LastUpdate { get; set; }
     }
 }

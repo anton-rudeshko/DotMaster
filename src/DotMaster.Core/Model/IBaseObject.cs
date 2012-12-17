@@ -9,6 +9,8 @@ namespace DotMaster.Core.Model
     {
         IList<TXref> Xrefs { get; set; }
 
+        MasterStatus MasterStatus { get; set; }
+
         DateTime LastUpdate { get; set; }
     }
 }

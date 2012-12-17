@@ -13,6 +13,7 @@ namespace DotMaster.NHibernate.Mappings
             Id(x => x.ObjKey).Not.Nullable();
 
             Map(x => x.LastUpdate).Not.Nullable();
+            Map(x => x.MasterStatus).Not.Nullable();
 
             HasMany(x => x.Xrefs).KeyColumn(ReflectionUtils.NameOf((TXref x) => x.BaseObjKey)).Cascade.All();
         }
