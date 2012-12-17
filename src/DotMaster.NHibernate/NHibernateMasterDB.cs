@@ -77,7 +77,7 @@ namespace DotMaster.NHibernate
                 throw new InvalidOperationException("You can't save base object without any xrefs");
             }
 
-            InTransaction(() => CurrentSession.SaveOrUpdate(baseObject));
+            CurrentSession.SaveOrUpdate(baseObject);
         }
 
         public void Update<TKey, TBase, TXref>(TBase baseObject)
@@ -89,7 +89,7 @@ namespace DotMaster.NHibernate
                 throw new ArgumentNullException("baseObject");
             }
 
-            InTransaction(() => CurrentSession.Update(baseObject));
+            CurrentSession.Update(baseObject);
         }
 
         /// <summary>
@@ -132,23 +132,6 @@ namespace DotMaster.NHibernate
             }
 
             return xref.BaseObject;
-        }
-
-        private void InTransaction(Action action)
-        {
-            using (var tx = CurrentSession.BeginTransaction())
-            {
-                try
-                {
-                    action();
-                    tx.Commit();
-                }
-                catch (Exception)
-                {
-                    tx.Rollback();
-                    throw;
-                }
-            }
         }
     }
 }

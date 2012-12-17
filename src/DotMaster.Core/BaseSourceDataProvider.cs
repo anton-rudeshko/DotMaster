@@ -16,6 +16,9 @@ namespace DotMaster.Core
             Source = source;
         }
 
+        /// <summary>
+        /// В реализации следует сделать выполнять этот метод в отдельной транзакции
+        /// </summary>
         public void Provide(TXref xref)
         {
             if (xref == null)
