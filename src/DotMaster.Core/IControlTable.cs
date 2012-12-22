@@ -6,6 +6,6 @@
     /// </summary>
     public interface IControlTable
     {
-         
+        string Name { get; set; }
     }
 }
