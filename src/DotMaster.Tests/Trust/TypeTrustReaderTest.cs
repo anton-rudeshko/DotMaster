@@ -73,7 +73,7 @@ namespace DotMaster.Tests.Trust
             var trustStrategy = reader.ReadAllTrustRulesFrom(typeof (TestTypes.C)).GetTrustStrategyFor("NoTrust", "BBB");
 
             Assert.That(trustStrategy, Is.InstanceOf<FixedScoreTrustStrategy>());
-            Assert.That(trustStrategy.GetScore<int, TestBO, TestXref>(null, null), Is.EqualTo(10));
+            Assert.That(trustStrategy.GetXrefScore<int, TestBO, TestXref>(null, null), Is.EqualTo(10));
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace DotMaster.Tests.Trust
             var trustStrategy = reader.ReadAllTrustRulesFrom(typeof (TestTypes.C)).GetTrustStrategyFor("NoTrust", "AAA");
 
             Assert.That(trustStrategy, Is.InstanceOf<FixedScoreTrustStrategy>());
-            Assert.That(trustStrategy.GetScore<int, TestBO, TestXref>(null, null), Is.EqualTo(30));
+            Assert.That(trustStrategy.GetXrefScore<int, TestBO, TestXref>(null, null), Is.EqualTo(30));
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace DotMaster.Tests.Trust
             var trustStrategy = reader.ReadAllTrustRulesFrom(typeof (TestTypes.C)).GetTrustStrategyFor("MyProperty3", "CCC");
 
             Assert.That(trustStrategy, Is.InstanceOf<FixedScoreTrustStrategy>());
-            Assert.That(trustStrategy.GetScore<int, TestBO, TestXref>(null, null), Is.EqualTo(5));
+            Assert.That(trustStrategy.GetXrefScore<int, TestBO, TestXref>(null, null), Is.EqualTo(5));
         }
     }
 }

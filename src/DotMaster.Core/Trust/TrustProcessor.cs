@@ -74,7 +74,7 @@ namespace DotMaster.Core.Trust
             where B : class, IBaseObject<K, B, X>
             where X : class, ICrossReference<K, B, X>
         {
-            return GetTrustStrategy<K, B, X>(property, xref).GetScore<K, B, X>(baseObject, xref);
+            return GetTrustStrategy<K, B, X>(property, xref).GetXrefScore<K, B, X>(baseObject, xref);
         }
 
         private ITrustStrategy GetTrustStrategy<K, B, X>(PropertyInfo property, X xref) 

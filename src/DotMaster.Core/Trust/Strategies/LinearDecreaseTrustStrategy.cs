@@ -15,12 +15,19 @@ namespace DotMaster.Core.Trust.Strategies
             _decay = decay;
         }
 
-        public int GetScore<TKey, TBase, TXref>(TBase baseObject, TXref xref)
+        public int GetXrefScore<TKey, TBase, TXref>(TBase baseObject, TXref xref)
             where TBase : class, IBaseObject<TKey, TBase, TXref>
             where TXref : class, ICrossReference<TKey, TBase, TXref>
         {
             // todo
             return _startScore;
+        }
+
+        public object GetWinValue<TKey, TBase, TXref>(TBase baseObject, TXref xref)
+            where TBase : class, IBaseObject<TKey, TBase, TXref>
+            where TXref : class, ICrossReference<TKey, TBase, TXref>
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
