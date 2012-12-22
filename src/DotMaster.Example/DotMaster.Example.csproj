@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -53,11 +54,12 @@
       <Project>{0F5C42CB-8D27-4B0C-9E65-59C1EBEAEB93}</Project>
       <Name>DotMaster.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotMaster.NHibernate\DotMaster.NHibernate.csproj">
+      <Project>{17453B96-A228-41AB-AE99-B7E6339BFC3F}</Project>
+      <Name>DotMaster.NHibernate</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mappings\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
