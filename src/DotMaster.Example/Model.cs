@@ -13,7 +13,7 @@ namespace DotMaster.Example
         public virtual IList<Mark> Marks { get; set; }
         public virtual StudentType StudentType { get; set; }
 
-        public bool IsMatch(Student other)
+        public virtual bool IsMatch(Student other)
         {
             return other.Name == Name && other.StudentType == StudentType;
         }
@@ -26,7 +26,7 @@ namespace DotMaster.Example
         public StudentMap()
         {
             Map(x => x.Name);
-            HasMany(x => x.Marks);
+            HasMany(x => x.Marks).Cascade.All();
             References(x => x.StudentType);
         }
     }
