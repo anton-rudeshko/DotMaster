@@ -41,6 +41,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>I18n.resx</DependentUpon>
     </Compile>
+    <Compile Include="Match\IMatchRule.cs" />
+    <Compile Include="Match\MatchAttribute.cs" />
     <Compile Include="Match\Matcher.cs" />
     <Compile Include="Merge\Merger.cs" />
     <Compile Include="Model\IBaseObject.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="Model\MasterStatus.cs" />
     <Compile Include="Trust\AppTrust.cs" />
     <Compile Include="Trust\AppTrustReader.cs" />
+    <Compile Include="Trust\FieldMetadata.cs" />
     <Compile Include="Trust\ITrustStrategy.cs" />
     <Compile Include="IMasterDataBase.cs" />
     <Compile Include="Trust\Attributes\AbstractTrustStrategyAttribute.cs" />
