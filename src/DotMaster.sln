@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotMaster.Tests", "DotMaste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotMaster.Example", "DotMaster.Example\DotMaster.Example.csproj", "{85E713AE-3FB0-460F-9114-02BC72FFD16B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotMaster.Social", "DotMaster.Social\DotMaster.Social.csproj", "{5E25AEF4-BC59-46E3-A2F8-9DEAF5C5B04D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{85E713AE-3FB0-460F-9114-02BC72FFD16B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85E713AE-3FB0-460F-9114-02BC72FFD16B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85E713AE-3FB0-460F-9114-02BC72FFD16B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E25AEF4-BC59-46E3-A2F8-9DEAF5C5B04D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E25AEF4-BC59-46E3-A2F8-9DEAF5C5B04D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E25AEF4-BC59-46E3-A2F8-9DEAF5C5B04D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E25AEF4-BC59-46E3-A2F8-9DEAF5C5B04D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

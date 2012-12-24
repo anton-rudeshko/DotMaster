@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CF88A56F-1527-48CD-B754-7C3486A18947}</ProjectGuid>
+    <ProjectGuid>{5E25AEF4-BC59-46E3-A2F8-9DEAF5C5B04D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DotMaster.Tests</RootNamespace>
-    <AssemblyName>DotMaster.Tests</AssemblyName>
+    <RootNamespace>DotMaster.Social</RootNamespace>
+    <AssemblyName>DotMaster.Social</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -37,61 +37,32 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.3.2.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    <Reference Include="NHibernate.Linq">
+      <HintPath>..\packages\NHibernate.Linq.1.0\lib\NHibernate.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GenerateSchema.cs" />
-    <Compile Include="KernelTest.cs" />
-    <Compile Include="ManyToMany\ManyToMany.cs" />
-    <Compile Include="ManyToOne\ManyToOneTest.cs" />
-    <Compile Include="ManyToOne\ManyToOne.cs" />
-    <Compile Include="NHibernateTestHelper.cs" />
-    <Compile Include="NHibernate\NHibernateMasterDBTest.cs" />
+    <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SocialExample\SocialExampleTest.cs" />
-    <Compile Include="StudentExample\StudentExampleTest.cs" />
-    <Compile Include="TestDataModel.cs" />
-    <Compile Include="Trust\AppTrustReaderTest.cs" />
-    <Compile Include="Trust\ReflectionTest.cs" />
-    <Compile Include="Trust\TestTrustStrategy.cs" />
-    <Compile Include="Trust\TestTypes.cs" />
-    <Compile Include="Trust\TypeTrustReaderTest.cs" />
-    <Compile Include="Trust\GenericTrustStrategyAttributeTest.cs" />
-    <Compile Include="Utils\ReflectionUtilsTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotMaster.Core\DotMaster.Core.csproj">
       <Project>{0F5C42CB-8D27-4B0C-9E65-59C1EBEAEB93}</Project>
       <Name>DotMaster.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DotMaster.Example\DotMaster.Example.csproj">
-      <Project>{85E713AE-3FB0-460F-9114-02BC72FFD16B}</Project>
-      <Name>DotMaster.Example</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DotMaster.NHibernate\DotMaster.NHibernate.csproj">
       <Project>{17453B96-A228-41AB-AE99-B7E6339BFC3F}</Project>
       <Name>DotMaster.NHibernate</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
