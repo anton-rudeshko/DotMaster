@@ -19,12 +19,12 @@ namespace DotMaster.Social
         /// <summary>
         /// Возраст
         /// </summary>
-        public virtual int Age { get; set; }
+        public virtual int? Age { get; set; }
 
         /// <summary>
         /// Возраст
         /// </summary>
-        public virtual Sex Sex { get; set; }
+        public virtual Sex? Sex { get; set; }
 
         /// <summary>
         /// Занятость
@@ -34,12 +34,7 @@ namespace DotMaster.Social
         /// <summary>
         /// Сообщения на стене
         /// </summary>
-        public virtual IList<Post> Posts { get; set; }
-
-        /// <summary>
-        /// Друзья
-        /// </summary>
-        public virtual IList<Profile> Friends { get; set; }
+        public virtual IList<Address> Addresses { get; set; }
     }
 
     /// <summary>
@@ -76,14 +71,10 @@ namespace DotMaster.Social
         {
             m.Map(x => x.FullName).Not.Nullable();
             m.Map(x => x.Age);
-            m.Map(x => x.Sex).Not.Nullable();
+            m.Map(x => x.Sex);
+            m.Map(x => x.Occupation);
 
-            m.HasMany(x => x.Posts);
-
-            m.HasManyToMany(x => x.Friends)
-             .ParentKeyColumn("Friend1Id")
-             .ChildKeyColumn("Friend2Id")
-             .Cascade.All();
+            m.HasMany(x => x.Addresses);
         }
     }
 
@@ -98,50 +89,75 @@ namespace DotMaster.Social
     /// <summary>
     /// Запись на стене
     /// </summary>
-    public class Post : IntBaseObject<Post, PostXref>
+    public class Address : IntBaseObject<Address, AddressXref>
     {
         /// <summary>
-        /// Дата
+        /// Страна
         /// </summary>
-        public virtual DateTime PostedOn { get; set; }
+        public virtual Country Country { get; set; }
 
         /// <summary>
-        /// Текст сообщения
+        /// Город
         /// </summary>
-        public virtual string Text { get; set; }
+        public virtual string City { get; set; }
 
         /// <summary>
-        /// Профиль пользователя
+        /// Строка адреса
+        /// </summary>
+        public virtual string Line { get; set; }
+
+        /// <summary>
+        /// Ссылка на профиль пользователя
         /// </summary>
         public virtual Profile Profile { get; set; }
     }
 
-    public class PostXref : IntCrossReference<Post, PostXref> {}
+    public class AddressXref : IntCrossReference<Address, AddressXref> {}
 
-    public class PostMap : IntBaseObjectMap<Post, PostXref>
+    public class AddressMap : IntBaseObjectMap<Address, AddressXref>
     {
-        public PostMap()
+        public AddressMap()
         {
-            MapBaseObject(this);
+            MapProperties(this);
+
+            References(x => x.Country);
             References(x => x.Profile);
         }
 
-        public static void MapBaseObject(ClasslikeMapBase<Post> part)
+        public static void MapProperties(ClasslikeMapBase<Address> part)
         {
-            part.Map(x => x.PostedOn).Not.Nullable();
-            part.Map(x => x.Text).Not.Nullable();
+            part.Map(x => x.Line).Not.Nullable();
         }
     }
 
-    public class PostXrefMap : IntXrefMap<Post, PostXref>
+    public class AddressXrefMap : IntXrefMap<Address, AddressXref>
     {
-        public PostXrefMap()
+        public AddressXrefMap()
         {
             Component(x => x.ObjectData, part =>
                 {
-                    PostMap.MapBaseObject(part);
+                    AddressMap.MapProperties(part);
                     part.References(x => x.Profile).ForeignKey("none");
+                    part.References(x => x.Country).ForeignKey("none");
                 });
+        }
+    }
+
+    public class Country
+    {
+        public virtual int Id { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string IsoCode { get; set; }
+    }
+
+    public class CountryMap : ClassMap<Country>
+    {
+        public CountryMap()
+        {
+            Id(x => x.Id);
+
+            Map(x => x.Name);
+            Map(x => x.IsoCode);
         }
     }
 }

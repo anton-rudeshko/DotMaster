@@ -33,7 +33,8 @@ namespace DotMaster.Tests.SocialExample
         {
             m.FluentMappings
              .Add<ProfileMap>().Add<ProfileXrefMap>()
-             .Add<PostMap>().Add<PostXrefMap>();
+             .Add<AddressMap>().Add<AddressXrefMap>()
+             .Add<CountryMap>();
         }
     }
 }
