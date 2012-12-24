@@ -120,7 +120,7 @@ namespace DotMaster.Social
         {
             MapProperties(this);
 
-            References(x => x.Country);
+            References(x => x.Country).Cascade.None();
             References(x => x.Profile);
         }
 
