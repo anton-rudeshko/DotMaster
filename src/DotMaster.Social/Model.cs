@@ -6,6 +6,9 @@ using FluentNHibernate.Mapping;
 
 namespace DotMaster.Social
 {
+    /// <summary>
+    /// Социальный профиль пользователя
+    /// </summary>
     public class Profile : IntBaseObject<Profile, ProfileXref>
     {
         /// <summary>
@@ -75,7 +78,12 @@ namespace DotMaster.Social
             m.Map(x => x.Age);
             m.Map(x => x.Sex).Not.Nullable();
 
-            m.HasManyToMany(x => x.Friends);
+            m.HasMany(x => x.Posts);
+
+            m.HasManyToMany(x => x.Friends)
+             .ParentKeyColumn("Friend1Id")
+             .ChildKeyColumn("Friend2Id")
+             .Cascade.All();
         }
     }
 
@@ -87,24 +95,6 @@ namespace DotMaster.Social
         }
     }
 
-    public class Country
-    {
-        public virtual int Id { get; set; }
-        public virtual string IsoCode { get; set; }
-        public virtual string Name { get; set; }
-    }
-
-    public class CountryMap : ClassMap<Country>
-    {
-        public CountryMap()
-        {
-            Id(x => x.Id).Not.Nullable();
-
-            Map(x => x.Name).Not.Nullable();
-            Map(x => x.IsoCode).Not.Nullable();
-        }
-    }
-
     /// <summary>
     /// Запись на стене
     /// </summary>
@@ -113,12 +103,17 @@ namespace DotMaster.Social
         /// <summary>
         /// Дата
         /// </summary>
-        public virtual DateTime Date { get; set; }
+        public virtual DateTime PostedOn { get; set; }
 
         /// <summary>
         /// Текст сообщения
         /// </summary>
         public virtual string Text { get; set; }
+
+        /// <summary>
+        /// Профиль пользователя
+        /// </summary>
+        public virtual Profile Profile { get; set; }
     }
 
     public class PostXref : IntCrossReference<Post, PostXref> {}
@@ -128,12 +123,13 @@ namespace DotMaster.Social
         public PostMap()
         {
             MapBaseObject(this);
+            References(x => x.Profile);
         }
 
-        public static void MapBaseObject(ClasslikeMapBase<Post> m)
+        public static void MapBaseObject(ClasslikeMapBase<Post> part)
         {
-            m.Map(x => x.Date).Not.Nullable();
-            m.Map(x => x.Text).Not.Nullable();
+            part.Map(x => x.PostedOn).Not.Nullable();
+            part.Map(x => x.Text).Not.Nullable();
         }
     }
 
@@ -141,7 +137,11 @@ namespace DotMaster.Social
     {
         public PostXrefMap()
         {
-            Component(x => x.ObjectData, PostMap.MapBaseObject);
+            Component(x => x.ObjectData, part =>
+                {
+                    PostMap.MapBaseObject(part);
+                    part.References(x => x.Profile).ForeignKey("none");
+                });
         }
     }
 }

@@ -90,6 +90,10 @@
       <Project>{17453B96-A228-41AB-AE99-B7E6339BFC3F}</Project>
       <Name>DotMaster.NHibernate</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotMaster.Social\DotMaster.Social.csproj">
+      <Project>{5E25AEF4-BC59-46E3-A2F8-9DEAF5C5B04D}</Project>
+      <Name>DotMaster.Social</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
