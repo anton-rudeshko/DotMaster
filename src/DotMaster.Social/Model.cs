@@ -1,64 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DotMaster.Core.Match;
 using DotMaster.Core.Model.Impl;
+using DotMaster.Core.Trust.Attributes;
 using DotMaster.NHibernate.Mappings;
 using FluentNHibernate.Mapping;
 
 namespace DotMaster.Social
 {
-    /// <summary>
-    /// Социальный профиль пользователя
-    /// </summary>
-    public class Profile : IntBaseObject<Profile, ProfileXref>
+    [FixedScore(30, ForSource = "Facebook")]
+    [FixedScore(50, ForSource = "MAI")]
+    [FixedScore(70, ForSource = "Google Plus")]
+    public class Profile : IntBaseObject<Profile, ProfileXref>, IMatchRule<Profile>
     {
-        /// <summary>
-        /// Полное имя
-        /// </summary>
+        [FixedScore(80, ForSource = "MAI")]
         public virtual string FullName { get; set; }
 
-        /// <summary>
-        /// Возраст
-        /// </summary>
         public virtual int? Age { get; set; }
 
-        /// <summary>
-        /// Возраст
-        /// </summary>
         public virtual Sex? Sex { get; set; }
 
-        /// <summary>
-        /// Занятость
-        /// </summary>
+        [FixedScore(10, ForSource = "MAI")]
         public virtual string Occupation { get; set; }
 
-        /// <summary>
-        /// Сообщения на стене
-        /// </summary>
         public virtual IList<Address> Addresses { get; set; }
+
+        public virtual bool IsMatch(Profile other)
+        {
+            // сравнение профилей
+            return false;
+        }
     }
 
-    /// <summary>
-    /// Пол
-    /// </summary>
     public enum Sex
     {
-        /// <summary>
-        /// Неизвестен
-        /// </summary>
-        Unknown = 0,
+        Unknown = 0, Male = 1, Female = 2
+    }
 
-        /// <summary>
-        /// Мужской
-        /// </summary>
-        Male = 1,
+    [FixedScore(30, ForSource = "Facebook")]
+    [FixedScore(50, ForSource = "MAI")]
+    [FixedScore(70, ForSource = "Google Plus")]
+    public class Address : IntBaseObject<Address, AddressXref>, IMatchRule<Address>
+    {
+        public virtual Country Country { get; set; }
 
-        /// <summary>
-        /// Женский
-        /// </summary>
-        Female = 2
+        public virtual string City { get; set; }
+
+        public virtual string Line { get; set; }
+
+        public virtual Profile Profile { get; set; }
+
+        public virtual bool IsMatch(Address other)
+        {
+            // сравнение адресов
+            return false;
+        }
+    }
+
+    public class Country
+    {
+        public virtual int Id { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string IsoCode { get; set; }
     }
 
     public class ProfileXref : IntCrossReference<Profile, ProfileXref> {}
+
+    public class AddressXref : IntCrossReference<Address, AddressXref> {}
 
     public class ProfileMap : IntBaseObjectMap<Profile, ProfileXref>
     {
@@ -71,7 +78,7 @@ namespace DotMaster.Social
         {
             m.Map(x => x.FullName).Not.Nullable();
             m.Map(x => x.Age);
-            m.Map(x => x.Sex);
+            m.Map(x => x.Sex).CustomType<int>();
             m.Map(x => x.Occupation);
 
             m.HasMany(x => x.Addresses);
@@ -85,34 +92,6 @@ namespace DotMaster.Social
             Component(x => x.ObjectData, ProfileMap.MapBaseObject);
         }
     }
-
-    /// <summary>
-    /// Запись на стене
-    /// </summary>
-    public class Address : IntBaseObject<Address, AddressXref>
-    {
-        /// <summary>
-        /// Страна
-        /// </summary>
-        public virtual Country Country { get; set; }
-
-        /// <summary>
-        /// Город
-        /// </summary>
-        public virtual string City { get; set; }
-
-        /// <summary>
-        /// Строка адреса
-        /// </summary>
-        public virtual string Line { get; set; }
-
-        /// <summary>
-        /// Ссылка на профиль пользователя
-        /// </summary>
-        public virtual Profile Profile { get; set; }
-    }
-
-    public class AddressXref : IntCrossReference<Address, AddressXref> {}
 
     public class AddressMap : IntBaseObjectMap<Address, AddressXref>
     {
@@ -141,13 +120,6 @@ namespace DotMaster.Social
                     part.References(x => x.Country).ForeignKey("none");
                 });
         }
-    }
-
-    public class Country
-    {
-        public virtual int Id { get; set; }
-        public virtual string Name { get; set; }
-        public virtual string IsoCode { get; set; }
     }
 
     public class CountryMap : ClassMap<Country>

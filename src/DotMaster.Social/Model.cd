@@ -3,7 +3,7 @@
   <Class Name="DotMaster.Social.Profile">
     <Position X="9" Y="12" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAAAAABIAAAEAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <HashCode>AABCAAAAAAAABIAAAEAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Model.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -12,6 +12,7 @@
     <ShowAsCollectionAssociation>
       <Property Name="Addresses" />
     </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="DotMaster.Social.ProfileXref" Collapsed="true">
     <Position X="0.5" Y="12.25" Width="2.5" />
@@ -36,14 +37,6 @@
   </Class>
   <Class Name="DotMaster.Social.Address">
     <Position X="13.75" Y="12" Width="2.25" />
-    <InheritanceLine Type="DotMaster.Core.Model.Impl.IntBaseObject&lt;TBase, TXref&gt;" FixedToPoint="true">
-      <Path>
-        <Point X="12.125" Y="11.191" />
-        <Point X="12.125" Y="11.45" />
-        <Point X="14.125" Y="11.45" />
-        <Point X="14.125" Y="12" />
-      </Path>
-    </InheritanceLine>
     <AssociationLine Name="Country" Type="DotMaster.Social.Country">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.11" Y="0.25" />
@@ -55,13 +48,14 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAIAAAAAABAAAAABAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAIAAAAAAAAAAIAAAAAABAAAAABAAA=</HashCode>
       <FileName>Model.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Country" />
       <Property Name="Profile" />
     </ShowAsAssociation>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="DotMaster.Social.AddressXref" Collapsed="true">
     <Position X="3.5" Y="12.25" Width="2.5" />
